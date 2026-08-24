@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1: Introduction to Cybersecurity - Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* Password Section */
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #f1f8f4;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #fdeaea;
+            color: #c62828;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Answer Review */
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Chapter 1: Introduction to Cybersecurity</h1>
+            <p><strong>Cybersecurity Essentials Course</strong></p>
+            <p>30 Questions | Easy Level | Multiple Choice, True/False, Matching</p>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your course materials.</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 30</span>
+                    <span id="scoreIndicator">Score: 0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="questionsContainer"></div>
+
+            <!-- Button Group -->
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 30</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Cybersecurity Essentials - Chapter 1 Quiz</strong></p>
+            <p>© 2026 IconicInfoSec | Introduction to Cybersecurity Assessment</p>
+            <p>This quiz covers fundamental concepts of cybersecurity, security types, threats, and career paths</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // QUIZ DATA - Chapter 1: Introduction to Cybersecurity
+        // ============================================
+        
+        const quizData = [
+            // Multiple Choice Questions (1-20)
+            {
+                id: 1,
+                question: "What is the primary goal of cybersecurity?",
+                type: "multiple",
+                options: [
+                    "To ensure confidentiality, integrity, and availability (CIA triad) of information",
+                    "To make computer systems run faster",
+                    "To create new software applications",
+                    "To design computer hardware"
+                ],
+                correct: 0,
+                explanation: "The primary goal of cybersecurity is to ensure the confidentiality, integrity, and availability (CIA triad) of information and systems, protecting them from cyber attacks, unauthorized access, damage, or theft."
+            },
+            {
+                id: 2,
+                question: "Which type of security protects buildings, devices, and people?",
+                type: "multiple",
+                options: [
+                    "Cyber Security",
+                    "Physical Security",
+                    "Information Security",
+                    "Network Security"
+                ],
+                correct: 1,
+                explanation: "Physical Security protects buildings, devices, and people from physical threats and unauthorized physical access."
+            },
+            {
+                id: 3,
+                question: "What does Information Security protect?",
+                type: "multiple",
+                options: [
+                    "Only digital data",
+                    "Only paper documents",
+                    "Information in all forms - digital, paper, and verbal",
+                    "Only network systems"
+                ],
+                correct: 2,
+                explanation: "Information Security protects information in all forms — digital, paper, and verbal, whereas Cybersecurity specifically protects digital systems and data."
+            },
+            {
+                id: 4,
+                question: "Which of the following is NOT a key component of cybersecurity?",
+                type: "multiple",
+                options: [
+                    "Prevention",
+                    "Monitoring",
+                    "Incident Response",
+                    "Software Development"
+                ],
+                correct: 3,
+                explanation: "The key components of cybersecurity include Prevention, Monitoring, Incident Response, Data Protection, Compliance, and Identity and Access Management (IAM). Software Development is not a key component."
+            },
+            {
+                id: 5,
+                question: "What is the purpose of firewalls in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "To speed up internet connections",
+                    "To implement security controls and stop attacks before they happen",
+                    "To create backup copies of data",
+                    "To design websites"
+                ],
+                correct: 1,
+                explanation: "Firewalls are part of the Prevention component in cybersecurity, implementing security controls to stop attacks before they happen."
+            },
+            {
+                id: 6,
+                question: "Which ransomware attack affected over 200,000 computers worldwide in 2017?",
+                type: "multiple",
+                options: [
+                    "NotPetya",
+                    "WannaCry",
+                    "Cryptolocker",
+                    "Ryuk"
+                ],
+                correct: 1,
+                explanation: "WannaCry ransomware in 2017 affected over 200,000 computers worldwide, exploited a Windows vulnerability, and highlighted the importance of patching and network segmentation."
+            },
+            {
+                id: 7,
+                question: "In the 2017 Equifax data breach, what was the main cause?",
+                type: "multiple",
+                options: [
+                    "Phishing attack",
+                    "Unpatched vulnerability in Apache Struts",
+                    "Insider threat",
+                    "DDoS attack"
+                ],
+                correct: 1,
+                explanation: "The Equifax data breach exposed personal data of 147 million people due to an unpatched vulnerability in Apache Struts, emphasizing the importance of vulnerability management."
+            },
+            {
+                id: 8,
+                question: "What type of attack was used in the Twitter Bitcoin Scam of 2020?",
+                type: "multiple",
+                options: [
+                    "Malware",
+                    "DDoS",
+                    "Social Engineering",
+                    "Ransomware"
+                ],
+                correct: 2,
+                explanation: "The Twitter Bitcoin Scam used social engineering to access internal tools and compromise accounts of high-profile individuals, emphasizing the role of insider threats and strong IAM policies."
+            },
+            {
+                id: 9,
+                question: "Which certification is considered entry-level for cybersecurity?",
+                type: "multiple",
+                options: [
+                    "CISSP",
+                    "CISM",
+                    "CompTIA Security+",
+                    "CCSP"
+                ],
+                correct: 2,
+                explanation: "CompTIA Security+ and Cisco CyberOps Associate are entry-level certifications. CISSP, CISM, and CCSP are advanced certifications."
+            },
+            {
+                id: 10,
+                question: "What does IAM stand for in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "Internet Access Management",
+                    "Identity and Access Management",
+                    "Information Asset Management",
+                    "Integrated Application Monitoring"
+                ],
+                correct: 1,
+                explanation: "IAM stands for Identity and Access Management, which controls who can access systems and data, ensuring users only have the access they need."
+            },
+            {
+                id: 11,
+                question: "Which of these is a common cyber threat mentioned in the cybersecurity landscape?",
+                type: "multiple",
+                options: [
+                    "Hardware upgrades",
+                    "Ransomware",
+                    "Software licensing",
+                    "User training sessions"
+                ],
+                correct: 1,
+                explanation: "Common cyber threats include malware, ransomware, viruses, phishing, DDoS attacks, and insider threats."
+            },
+            {
+                id: 12,
+                question: "What is a vulnerability in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "A type of firewall",
+                    "A security certification",
+                    "A weakness in systems that attackers can exploit",
+                    "A monitoring tool"
+                ],
+                correct: 2,
+                explanation: "Vulnerabilities are weaknesses in systems, applications, or networks that attackers can exploit, often coming from unpatched software, poor configurations, or human error."
+            },
+            {
+                id: 13,
+                question: "Which regulation is mentioned as a compliance requirement for organizations?",
+                type: "multiple",
+                options: [
+                    "ISO 9001",
+                    "GDPR",
+                    "HTML5",
+                    "TCP/IP"
+                ],
+                correct: 1,
+                explanation: "GDPR (General Data Protection Regulation), along with HIPAA and PCI DSS, are laws and standards that organizations must follow to protect data privacy and security."
+            },
+            {
+                id: 14,
+                question: "What makes the cybersecurity landscape challenging regarding IoT devices?",
+                type: "multiple",
+                options: [
+                    "They are too expensive",
+                    "They expand the attack surface and often have weaker security controls",
+                    "They consume too much power",
+                    "They are difficult to install"
+                ],
+                correct: 1,
+                explanation: "IoT devices expand the attack surface and often have weaker security controls, making the cybersecurity landscape more challenging."
+            },
+            {
+                id: 15,
+                question: "What is the role of a Security Analyst?",
+                type: "multiple",
+                options: [
+                    "Design new computer hardware",
+                    "Monitor and protect computer systems and networks",
+                    "Create marketing campaigns",
+                    "Manage financial accounts"
+                ],
+                correct: 1,
+                explanation: "Security Analysts are responsible for monitoring and protecting an organization's computer systems and networks, analyzing security measures, identifying vulnerabilities, and responding to incidents."
+            },
+            {
+                id: 16,
+                question: "What is the primary responsibility of an Incident Responder?",
+                type: "multiple",
+                options: [
+                    "Develop new software",
+                    "Respond to and manage security incidents",
+                    "Design network infrastructure",
+                    "Train employees on software applications"
+                ],
+                correct: 1,
+                explanation: "Incident Responders are specialized in responding to cybersecurity incidents, managing security incidents including data breaches and network intrusions, and developing incident response plans."
+            },
+            {
+                id: 17,
+                question: "What does a Penetration Tester do?",
+                type: "multiple",
+                options: [
+                    "Test network speed",
+                    "Simulate cyberattacks to identify vulnerabilities",
+                    "Install operating systems",
+                    "Design user interfaces"
+                ],
+                correct: 1,
+                explanation: "Penetration Testers (Ethical Hackers) simulate cyberattacks to identify vulnerabilities in systems and networks, helping organizations strengthen security proactively."
+            },
+            {
+                id: 18,
+                question: "Which certification is appropriate for a Penetration Tester?",
+                type: "multiple",
+                options: [
+                    "CompTIA A+",
+                    "CEH (Certified Ethical Hacker)",
+                    "Project Management Professional",
+                    "Microsoft Office Specialist"
+                ],
+                correct: 1,
+                explanation: "CEH (Certified Ethical Hacker), OSCP (Offensive Security Certified Professional), and CompTIA PenTest+ are relevant certifications for Penetration Testers."
+            },
+            {
+                id: 19,
+                question: "What is the main focus of a Compliance Officer in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "Writing code",
+                    "Ensuring organizations adhere to laws and regulations",
+                    "Designing hardware",
+                    "Managing social media"
+                ],
+                correct: 1,
+                explanation: "Compliance Officers ensure that organizations adhere to laws, regulations, and policies related to cybersecurity and data protection, monitoring compliance with GDPR, HIPAA, PCI-DSS, etc."
+            },
+            {
+                id: 20,
+                question: "What is the cybersecurity landscape?",
+                type: "multiple",
+                options: [
+                    "A physical location where cyber professionals work",
+                    "The overall environment of cyber threats, risks, and defenses",
+                    "A type of computer network",
+                    "A software application"
+                ],
+                correct: 1,
+                explanation: "The cybersecurity landscape is the overall environment of cyber threats, risks, attack methods, technologies, and defenses that organizations face. It includes hackers, malware, phishing, ransomware, vulnerabilities, security tools, and policies."
+            },
+
+            // True/False Questions (21-30)
+            {
+                id: 21,
+                question: "Cybersecurity protects information in all forms including digital, paper, and verbal communication.",
+                type: "true-false",
+                correct: 1,
+                explanation: "False. Information Security protects information in all forms (digital, paper, verbal), while Cybersecurity specifically protects digital systems, networks, and data from online attacks."
+            },
+            {
+                id: 22,
+                question: "Network Security protects network systems and communication from threats.",
+                type: "true-false",
+                correct: 0,
+                explanation: "True. Network Security is specifically designed to protect network systems and communication from various cyber threats and unauthorized access."
+            },
+            {
+                id: 23,
+                question: "The CIA triad stands for Confidentiality, Integrity, and Authenticity.",
+                type: "true-false",
+                correct: 1,
+                explanation: "False. The CIA triad stands for Confidentiality, Integrity, and Availability, not Authenticity. These are the three main principles of cybersecurity."
+            },
+            {
+                id: 24,
+                question: "Human error is a major cause of security breaches.",
+                type: "true-false",
+                correct: 0,
+                explanation: "True. Human error, weak passwords, and phishing attacks remain major causes of breaches. The human factor is a critical element in cybersecurity."
+            },
+            {
+                id: 25,
+                question: "Multi-Factor Authentication (MFA) is part of the Prevention component in cybersecurity.",
+                type: "true-false",
+                correct: 0,
+                explanation: "True. MFA is one of the security controls implemented as part of Prevention to stop attacks before they happen, along with firewalls, antivirus software, and security policies."
+            },
+            {
+                id: 26,
+                question: "Remote work and BYOD (Bring Your Own Device) decrease cybersecurity risks.",
+                type: "true-false",
+                correct: 1,
+                explanation: "False. Remote work and BYOD increase cybersecurity risks because users may connect through unsecured networks or devices, making the environment more challenging to secure."
+            },
+            {
+                id: 27,
+                question: "CISSP is an entry-level cybersecurity certification.",
+                type: "true-false",
+                correct: 1,
+                explanation: "False. CISSP (Certified Information Systems Security Professional) is an advanced certification. Entry-level certifications include CompTIA Security+ and Cisco CyberOps Associate."
+            },
+            {
+                id: 28,
+                question: "Incident Response includes Detection, Containment, Eradication, Recovery, and Post-incident analysis.",
+                type: "true-false",
+                correct: 0,
+                explanation: "True. These five steps are the key phases of Incident Response, forming a comprehensive plan to respond to security incidents effectively."
+            },
+            {
+                id: 29,
+                question: "The cybersecurity landscape remains constant and does not change over time.",
+                type: "true-false",
+                correct: 1,
+                explanation: "False. The cybersecurity landscape changes constantly because threats and technology keep evolving. Organizations must continuously adapt to new threats and attack methods."
+            },
+            {
+                id: 30,
+                question: "Application Security protects software and applications from threats.",
+                type: "true-false",
+                correct: 0,
+                explanation: "True. Application Security is one of the key types of security that specifically focuses on protecting software and applications from various cyber threats and vulnerabilities."
+            }
+        ];
+
+        // Password Configuration
+        const CORRECT_PASSWORD = "Pro@cyber";
+        
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // ============================================
+        // CORE FUNCTIONS
+        // ============================================
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            if (quizData.length === 0) {
+                alert("No questions added to quiz data!");
+                return;
+            }
+
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+            const inputType = question.type === "multiple" ? "radio" : "checkbox";
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "Quiz completed!";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work! You have a strong understanding of cybersecurity fundamentals!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job! You're well on your way to mastering cybersecurity basics!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort! Review the explanations to strengthen your knowledge!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying! Review the chapter materials for better understanding!";
+            } else {
+                message = "💪 Continue learning! Go through the chapter again and retake the quiz!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            // Answer review
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText || "Not answered"}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+            let content = "Cybersecurity Essentials - Chapter 1 Quiz Results\n";
+            content += "=================================================\n\n";
+            content += "Chapter: Introduction to Cybersecurity\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n`;
+            content += `Date: ${new Date().toLocaleDateString()}\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Type: ${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}\n`;
+                content += `Your Answer: ${userAnswerText || "Not answered"}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "-------------------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Chapter1_Cybersecurity_Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
