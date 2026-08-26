@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Identity and Access Management (IAM) - Easy Level Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chapter 8: Identity & Access Management (IAM)</h1>
+            <p><strong>Cyber Security Essential - Easy Level Quiz</strong></p>
+            <p>30 Questions | Multiple Choice, True/False & Matching</p>
+        </div>
+
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your course materials.</p>
+        </div>
+
+        <div class="content" id="quizContent">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 30</span>
+                    <span id="scoreIndicator">Answered: 0/30</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 30</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Chapter 8: Identity & Access Management (IAM) | Easy Level</strong></p>
+            <p>© 2026 Cyber Security Essential Course</p>
+            <p>Password Protected Quiz Framework</p>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                question: "IAM helps organizations control who can access what in IT environments.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Identity and Access Management (IAM) controls who (identity) can access what (resources) in IT systems."
+            },
+            {
+                id: 2,
+                question: "What are the four main components of IAM?",
+                type: "multiple",
+                options: [
+                    "Login, Password, Firewall, Encryption",
+                    "Identification, Authentication, Authorization, Accountability",
+                    "Security, Privacy, Compliance, Monitoring",
+                    "Hardware, Software, Network, Data"
+                ],
+                correct: 1,
+                explanation: "The four IAM components are: Identification (who you are), Authentication (verify identity), Authorization (permissions), and Accountability (auditing)."
+            },
+            {
+                id: 3,
+                question: "Authentication is the process of verifying a user's identity.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Authentication verifies identity using methods like passwords, MFA, or biometrics to ensure access is granted to legitimate users."
+            },
+            {
+                id: 4,
+                question: "What does MFA stand for?",
+                type: "multiple",
+                options: [
+                    "Multiple File Access",
+                    "Multi-Factor Authentication",
+                    "Managed Firewall Application",
+                    "Main Function Authorization"
+                ],
+                correct: 1,
+                explanation: "MFA stands for Multi-Factor Authentication, which combines two or more verification methods to enhance security."
+            },
+            {
+                id: 5,
+                question: "Biometric authentication uses unique biological traits like fingerprints or facial recognition.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Biometric authentication uses physical characteristics such as fingerprints, face, iris, or voice for identity verification."
+            },
+            {
+                id: 6,
+                question: "What does SSO stand for?",
+                type: "multiple",
+                options: [
+                    "Secure Socket Operation",
+                    "Single Sign-On",
+                    "System Security Officer",
+                    "Standard Security Output"
+                ],
+                correct: 1,
+                explanation: "SSO stands for Single Sign-On, allowing users to log in once and access multiple applications without repeated logins."
+            },
+            {
+                id: 7,
+                question: "OTP (One-Time Password) is a dynamic password generated for a single session or transaction.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. OTPs are temporary passwords sent via SMS, email, or authenticator apps for one-time use."
+            },
+            {
+                id: 8,
+                question: "Which of the following is an IAM system?",
+                type: "multiple",
+                options: [
+                    "Microsoft Word",
+                    "Active Directory",
+                    "Google Chrome",
+                    "Adobe Photoshop"
+                ],
+                correct: 1,
+                explanation: "Microsoft Active Directory is an IAM system. Others include Okta, Azure AD, AWS IAM, and Google Workspace IAM."
+            },
+            {
+                id: 9,
+                question: "Authorization determines what authenticated users are allowed to do within a system.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Authorization grants permissions to authenticated users, defining what actions they can perform on resources."
+            },
+            {
+                id: 10,
+                question: "What are the three authentication factors in MFA?",
+                type: "multiple",
+                options: [
+                    "Username, Password, Email",
+                    "Something You Know, Something You Have, Something You Are",
+                    "Login, Logout, Session",
+                    "Hardware, Software, Network"
+                ],
+                correct: 1,
+                explanation: "MFA uses three factors: Something You Know (password), Something You Have (token/phone), Something You Are (biometrics)."
+            },
+            {
+                id: 11,
+                question: "Physical access controls include guards, fences, motion detectors, and locked doors.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Physical access controls protect facilities using guards, fences, motion detectors, laptop locks, doors, cameras, and mantraps."
+            },
+            {
+                id: 12,
+                question: "Which access control model restricts actions based on system-enforced labels?",
+                type: "multiple",
+                options: [
+                    "DAC (Discretionary Access Control)",
+                    "MAC (Mandatory Access Control)",
+                    "RBAC (Role-Based Access Control)",
+                    "ABAC (Attribute-Based Access Control)"
+                ],
+                correct: 1,
+                explanation: "MAC (Mandatory Access Control) uses system-enforced labels and classifications to restrict access, commonly used in military/government."
+            },
+            {
+                id: 13,
+                question: "DAC allows the object's owner to determine who can access the object.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Discretionary Access Control (DAC) grants the resource owner the ability to decide who can access their files or objects."
+            },
+            {
+                id: 14,
+                question: "What does RBAC stand for?",
+                type: "multiple",
+                options: [
+                    "Remote Backup Access Control",
+                    "Role-Based Access Control",
+                    "Routing Based Application Control",
+                    "Real-time Block Access Control"
+                ],
+                correct: 1,
+                explanation: "RBAC stands for Role-Based Access Control, where access is granted based on a user's job role within the organization."
+            },
+            {
+                id: 15,
+                question: "ABAC grants access based on attributes such as user role, location, time, or device.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Attribute-Based Access Control (ABAC) uses dynamic attributes (role, location, time, device) to make access decisions."
+            },
+            {
+                id: 16,
+                question: "What does ACL stand for in access control?",
+                type: "multiple",
+                options: [
+                    "Access Control List",
+                    "Administrative Control Layer",
+                    "Advanced Communication Link",
+                    "Automated Compliance Log"
+                ],
+                correct: 0,
+                explanation: "ACL stands for Access Control List, which defines rules that specify which traffic or users are allowed or denied access."
+            },
+            {
+                id: 17,
+                question: "Assets include hardware, software, network devices, firmware, and data.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Organizational assets include hardware systems, operating systems, software, network devices, firmware, and libraries."
+            },
+            {
+                id: 18,
+                question: "What are the two approaches to risk analysis?",
+                type: "multiple",
+                options: [
+                    "Fast and Slow",
+                    "Quantitative and Qualitative",
+                    "Internal and External",
+                    "Manual and Automatic"
+                ],
+                correct: 1,
+                explanation: "The two risk analysis approaches are Quantitative (physical/numerical) and Qualitative (logical/descriptive)."
+            },
+            {
+                id: 19,
+                question: "Physical protection of server rooms includes restricted access, locked doors, CCTV, and fire suppression systems.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Server room protection includes access control, locks, CCTV, guards, fire suppression, HVAC/cooling, UPS, and environmental monitoring."
+            },
+            {
+                id: 20,
+                question: "What is the recommended server room temperature range?",
+                type: "multiple",
+                options: [
+                    "10°C to 15°C",
+                    "18°C to 27°C (64°F to 80°F)",
+                    "30°C to 35°C",
+                    "0°C to 10°C"
+                ],
+                correct: 1,
+                explanation: "Server rooms should maintain 18°C to 27°C (64°F to 80°F), with maximum 32°C, for optimal equipment operation."
+            },
+            {
+                id: 21,
+                question: "Software asset protection includes license management, access control, patching, and backup.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Software protection includes license management, user access control, regular patching, source code protection, backup, and anti-malware."
+            },
+            {
+                id: 22,
+                question: "What is endpoint hardening?",
+                type: "multiple",
+                options: [
+                    "Making devices physically stronger",
+                    "Securing operating systems by removing unnecessary programs and applying patches",
+                    "Installing more RAM",
+                    "Upgrading hardware"
+                ],
+                correct: 1,
+                explanation: "Endpoint hardening enhances OS security by modifying defaults, removing unnecessary services, and applying security patches and updates."
+            },
+            {
+                id: 23,
+                question: "HIDS stands for Host Intrusion Detection System.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. HIDS (Host Intrusion Detection System) is software that monitors suspicious activity on a host computer."
+            },
+            {
+                id: 24,
+                question: "What security protocol improved wireless security after WEP?",
+                type: "multiple",
+                options: [
+                    "HTTP",
+                    "WPA/WPA2",
+                    "FTP",
+                    "SMTP"
+                ],
+                correct: 1,
+                explanation: "WPA/WPA2 (Wi-Fi Protected Access) was introduced to address WEP weaknesses and provide improved wireless security."
+            },
+            {
+                id: 25,
+                question: "Mutual authentication is when both entities in a communication link authenticate to each other.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Mutual authentication (two-way authentication) prevents rogue access points by requiring both sides to verify identity."
+            },
+            {
+                id: 26,
+                question: "What does DLP stand for in data protection?",
+                type: "multiple",
+                options: [
+                    "Data Link Protocol",
+                    "Data Loss Prevention",
+                    "Digital License Protection",
+                    "Dynamic Load Processing"
+                ],
+                correct: 1,
+                explanation: "DLP stands for Data Loss Prevention, a security strategy to prevent unauthorized data disclosure or exfiltration."
+            },
+            {
+                id: 27,
+                question: "RAID combines multiple physical hard drives into a single logical unit for redundancy and performance.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. RAID (Redundant Array of Independent Disks) provides data redundancy and improved performance by combining multiple drives."
+            },
+            {
+                id: 28,
+                question: "What does HSRP provide in network redundancy?",
+                type: "multiple",
+                options: [
+                    "Email backup",
+                    "Hot Standby Router Protocol for gateway redundancy",
+                    "Hard disk backup",
+                    "Wireless signal boost"
+                ],
+                correct: 1,
+                explanation: "HSRP (Hot Standby Router Protocol) eliminates single points of failure by providing redundant default gateway routers."
+            },
+            {
+                id: 29,
+                question: "N+1 redundancy means the system can withstand the loss of one component.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. N+1 redundancy ensures system availability even if one component fails, providing fault tolerance in data centers."
+            },
+            {
+                id: 30,
+                question: "What are the two main types of disasters in disaster recovery planning?",
+                type: "multiple",
+                options: [
+                    "Big and Small",
+                    "Natural and Human-caused",
+                    "Internal and External",
+                    "Expected and Unexpected"
+                ],
+                correct: 1,
+                explanation: "Disasters are classified as Natural (earthquakes, floods, hurricanes) and Human-caused (strikes, sabotage, terrorism, utility disruptions)."
+            }
+        ];
+
+        const CORRECT_PASSWORD = "Pro@cyber";
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+            displayQuestion(currentQuestion);
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                    return;
+                }
+            }
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work! You've mastered IAM concepts!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job! Strong understanding of access management!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort! Keep reviewing the material!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying! You're making progress!";
+            } else {
+                message = "💪 Continue learning! Review the chapter carefully!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+            let content = "Chapter 8: Identity and Access Management (IAM) - Easy Level Quiz Results\n";
+            content += "==========================================================================\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "---------------------------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Chapter8_Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
