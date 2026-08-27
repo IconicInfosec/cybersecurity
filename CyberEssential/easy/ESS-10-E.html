@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 10: Thwarting Cyber Criminals - Easy Level Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chapter 10: Thwarting Cyber Criminals</h1>
+            <p><strong>Cyber Security Essential - Easy Level Quiz</strong></p>
+            <p>30 Questions | Multiple Choice, True/False & Matching</p>
+        </div>
+
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your course materials.</p>
+        </div>
+
+        <div class="content" id="quizContent">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 30</span>
+                    <span id="scoreIndicator">Answered: 0/30</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 30</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Chapter 10: Thwarting Cyber Criminals | Easy Level</strong></p>
+            <p>© 2026 Cyber Security Essential Course</p>
+            <p>Password Protected Quiz Framework</p>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                question: "Stopping cybercriminals requires a combination of strategies, tools, and security practices.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. There is no single 'silver bullet' solution. It requires both proactive security measures and reactive incident management."
+            },
+            {
+                id: 2,
+                question: "What are the two main approaches in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "Offensive and Defensive",
+                    "Proactive and Reactive",
+                    "Internal and External",
+                    "Manual and Automatic"
+                ],
+                correct: 1,
+                explanation: "Proactive security measures reduce risk before attacks happen, while reactive incident management handles attacks after they occur."
+            },
+            {
+                id: 3,
+                question: "The first step in thwarting threats in infrastructure is to identify assets.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Step 1 is to identify assets that need protection, such as servers, network devices, applications, and data."
+            },
+            {
+                id: 4,
+                question: "What is the second step in the infrastructure threat management process?",
+                type: "multiple",
+                options: [
+                    "Implement preventive controls",
+                    "Assess risks",
+                    "Monitor continuously",
+                    "Segment the network"
+                ],
+                correct: 1,
+                explanation: "Step 2 is Assess risks - find threats, vulnerabilities, and possible impacts on the organization."
+            },
+            {
+                id: 5,
+                question: "Network segmentation helps limit the spread of attacks by separating critical systems.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Step 4 is network segmentation - separating critical systems to contain and limit attack propagation."
+            },
+            {
+                id: 6,
+                question: "What does Step 3 'Implement preventive controls' include?",
+                type: "multiple",
+                options: [
+                    "Only firewalls",
+                    "Firewalls, patching, access control, antivirus, and secure configurations",
+                    "Only antivirus software",
+                    "Only network monitoring"
+                ],
+                correct: 1,
+                explanation: "Preventive controls include firewalls, patching, access control, antivirus, and secure configurations to prevent attacks."
+            },
+            {
+                id: 7,
+                question: "Continuous monitoring involves watching logs, traffic, and endpoints for suspicious activity.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Step 5 is continuous monitoring of logs, network traffic, and endpoints to detect suspicious activities early."
+            },
+            {
+                id: 8,
+                question: "What is the National Vulnerability Database (NVD)?",
+                type: "multiple",
+                options: [
+                    "A private hacker database",
+                    "A publicly available collection of known vulnerabilities",
+                    "A social media platform",
+                    "A firewall product"
+                ],
+                correct: 1,
+                explanation: "NVD is a publicly available database of known vulnerabilities and security data maintained by NIST (nvd.nist.gov)."
+            },
+            {
+                id: 9,
+                question: "The Honeynet Project provides HoneyMap, which shows real-time attack visualizations.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The Honeynet Project's HoneyMap displays real-time visualizations of cyberattacks around the world."
+            },
+            {
+                id: 10,
+                question: "What is InfraGard?",
+                type: "multiple",
+                options: [
+                    "An antivirus software",
+                    "A partnership between FBI and private sector for threat intelligence sharing",
+                    "A firewall technology",
+                    "A social media platform"
+                ],
+                correct: 1,
+                explanation: "InfraGard is a partnership between the FBI and private sector to share information and intelligence to prevent cyberattacks."
+            },
+            {
+                id: 11,
+                question: "ISO 27000 standards provide a framework for implementing cybersecurity measures.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. ISO 27000 standards are Information Security Management Standards that provide a cybersecurity implementation framework."
+            },
+            {
+                id: 12,
+                question: "How many steps are in the ISM (Information Security Manual) risk management framework?",
+                type: "multiple",
+                options: [
+                    "4 steps",
+                    "6 steps",
+                    "8 steps",
+                    "10 steps"
+                ],
+                correct: 1,
+                explanation: "The ISM has 6 steps: Define the system, Select controls, Implement controls, Assess controls, Authorize the system, Monitor the system."
+            },
+            {
+                id: 13,
+                question: "ISACA tracks cybersecurity legislation and legal developments.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. ISACA monitors and tracks cybersecurity legislation related to privacy, data protection, breach notification, and IP protection."
+            },
+            {
+                id: 14,
+                question: "What is the purpose of preventive access controls?",
+                type: "multiple",
+                options: [
+                    "To detect attacks after they happen",
+                    "To restrict unauthorized activity and limit user privileges",
+                    "To recover from incidents",
+                    "To create backups"
+                ],
+                correct: 1,
+                explanation: "Preventive controls restrict unauthorized activity by limiting privileges, using firewalls, and blocking vulnerable ports/services."
+            },
+            {
+                id: 15,
+                question: "Deterrent controls completely stop malicious actions from occurring.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 1,
+                explanation: "False. Deterrent controls limit or mitigate actions but do NOT stop them. They discourage wrongdoing but cannot prevent it entirely."
+            },
+            {
+                id: 16,
+                question: "What is the relationship between rewards and deterrents?",
+                type: "multiple",
+                options: [
+                    "They are the same thing",
+                    "Deterrents are the opposite of rewards",
+                    "Deterrents are better than rewards",
+                    "They have no relationship"
+                ],
+                correct: 1,
+                explanation: "Deterrents are the opposite of rewards. Rewards encourage right behavior, while deterrents discourage wrong behavior."
+            },
+            {
+                id: 17,
+                question: "Recovery controls help restore systems from backups after an incident.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Recovery controls (Step 7) restore systems from backups and verify security before returning to service."
+            },
+            {
+                id: 18,
+                question: "What are compensative controls?",
+                type: "multiple",
+                options: [
+                    "Primary security controls",
+                    "Alternative protections when primary controls cannot be used",
+                    "Financial compensation for breaches",
+                    "Employee reward systems"
+                ],
+                correct: 1,
+                explanation: "Compensative controls provide alternative protections when primary security controls cannot be implemented or used."
+            },
+            {
+                id: 19,
+                question: "Data masking replaces sensitive information with a non-sensitive version that looks like the original.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Data masking secures data by replacing sensitive information with non-sensitive versions that look and act like originals."
+            },
+            {
+                id: 20,
+                question: "What is steganography?",
+                type: "multiple",
+                options: [
+                    "A type of encryption algorithm",
+                    "Concealing data in another file like graphics or audio",
+                    "A firewall technique",
+                    "A password policy"
+                ],
+                correct: 1,
+                explanation: "Steganography conceals secret messages in other files (graphics, audio, text) without attracting attention."
+            },
+            {
+                id: 21,
+                question: "The advantage of steganography over cryptography is that the secret message does not attract attention.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Unlike encrypted data which appears scrambled, steganographic messages look like normal files (images, audio) and don't raise suspicion."
+            },
+            {
+                id: 22,
+                question: "What is social steganography?",
+                type: "multiple",
+                options: [
+                    "Using social media for hacking",
+                    "Hiding messages in plain sight so only certain people understand the meaning",
+                    "Social engineering techniques",
+                    "Public key cryptography"
+                ],
+                correct: 1,
+                explanation: "Social steganography hides messages in plain sight where only certain people can understand the true meaning (e.g., teens on social media)."
+            },
+            {
+                id: 23,
+                question: "Obfuscation is the practice of making messages confusing or harder to understand.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Obfuscation uses data masking and steganography to make messages confusing, ambiguous, or harder to understand."
+            },
+            {
+                id: 24,
+                question: "What does software watermarking do?",
+                type: "multiple",
+                options: [
+                    "Adds graphics to software",
+                    "Inserts a secret message as proof of ownership",
+                    "Encrypts the entire program",
+                    "Creates software backups"
+                ],
+                correct: 1,
+                explanation: "Software watermarking inserts secret messages as proof of ownership. Removing the watermark results in nonfunctional code."
+            },
+            {
+                id: 25,
+                question: "User lifecycle management includes only the provisioning of new user accounts.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 1,
+                explanation: "False. User lifecycle includes provisioning (creating accounts), de-provisioning (removing accounts), and access reviews/audits."
+            },
+            {
+                id: 26,
+                question: "What is provisioning in user lifecycle management?",
+                type: "multiple",
+                options: [
+                    "Deleting user accounts",
+                    "Creating user accounts and granting access rights for new users",
+                    "Monitoring network traffic",
+                    "Installing antivirus"
+                ],
+                correct: 1,
+                explanation: "Provisioning creates user accounts, assigns roles/access rights, sets passwords, and configures MFA when users join an organization."
+            },
+            {
+                id: 27,
+                question: "De-provisioning is vital for preventing unauthorized access when employees leave.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. De-provisioning removes access rights and closes accounts when employees leave or change roles, preventing unauthorized access."
+            },
+            {
+                id: 28,
+                question: "What do access reviews and audits verify?",
+                type: "multiple",
+                options: [
+                    "Employee salaries",
+                    "Users have appropriate access according to current roles",
+                    "Office locations",
+                    "Marketing campaigns"
+                ],
+                correct: 1,
+                explanation: "Access reviews and audits regularly verify that users have appropriate access rights matching their current job roles."
+            },
+            {
+                id: 29,
+                question: "Organizations should review and improve security controls after incidents to prevent future attacks.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Step 8 involves learning from incidents and strengthening controls to prevent future attacks (continuous improvement)."
+            },
+            {
+                id: 30,
+                question: "What is defense in depth?",
+                type: "multiple",
+                options: [
+                    "Using only one security control",
+                    "Multi-layered defense with multiple security controls",
+                    "Physical security only",
+                    "Password protection only"
+                ],
+                correct: 1,
+                explanation: "Defense in Depth is a multi-layered security strategy using multiple controls (firewalls, IDS, encryption, access control) to protect assets."
+            }
+        ];
+
+        const CORRECT_PASSWORD = "Pro@cyber";
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+            displayQuestion(currentQuestion);
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                    return;
+                }
+            }
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work! You've mastered cyber defense!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job! Strong understanding of security controls!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort! Keep reviewing the material!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying! You're making progress!";
+            } else {
+                message = "💪 Continue learning! Review the chapter carefully!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+            let content = "Chapter 10: Thwarting Cyber Criminals - Easy Level Quiz Results\n";
+            content += "===============================================================\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "---------------------------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Chapter10_Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
