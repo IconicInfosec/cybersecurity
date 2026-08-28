@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 14: Concept of Ethical Hacking - Easy Level Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chapter 14: Concept of Ethical Hacking</h1>
+            <p><strong>Red Team, Blue Team & Risk/Governance</strong></p>
+            <p>30 Questions | Multiple Choice, True/False & Matching</p>
+        </div>
+
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your course materials.</p>
+        </div>
+
+        <div class="content" id="quizContent">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 30</span>
+                    <span id="scoreIndicator">Answered: 0/30</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 30</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Chapter 14: Concept of Ethical Hacking | Easy Level</strong></p>
+            <p>© 2026 Cyber Security Essential Course</p>
+            <p>Password Protected Quiz Framework</p>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                question: "Red Team is also known as the Offensive Security Team.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Red Team is the Offensive Security Team that simulates real-world attacks to test an organization's security defenses."
+            },
+            {
+                id: 2,
+                question: "What is the primary role of the Red Team?",
+                type: "multiple",
+                options: [
+                    "Defend systems from attacks",
+                    "Simulate real-world attacks to test security defenses",
+                    "Monitor network traffic",
+                    "Train employees on security policies"
+                ],
+                correct: 1,
+                explanation: "Red Team simulates real-world attacks on an organization's systems to test security defenses, acting like ethical hackers or penetration testers."
+            },
+            {
+                id: 3,
+                question: "Red Team members think and act like attackers to find vulnerabilities.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Red Team's job is to think and act like attackers (ethical hackers or penetration testers) to identify security weaknesses."
+            },
+            {
+                id: 4,
+                question: "What is reconnaissance in Red Team activities?",
+                type: "multiple",
+                options: [
+                    "Defending against attacks",
+                    "Information gathering using OSINT and other methods",
+                    "Installing security patches",
+                    "Training employees"
+                ],
+                correct: 1,
+                explanation: "Reconnaissance is the information gathering phase where Red Team collects public or internal information using OSINT (Open Source Intelligence)."
+            },
+            {
+                id: 5,
+                question: "OSINT stands for Open Source Intelligence.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. OSINT (Open Source Intelligence) is the practice of collecting information from publicly available sources for reconnaissance."
+            },
+            {
+                id: 6,
+                question: "Which is a Red Team activity?",
+                type: "multiple",
+                options: [
+                    "Network monitoring with SIEM",
+                    "Vulnerability scanning and exploitation",
+                    "Applying security patches",
+                    "User awareness training"
+                ],
+                correct: 1,
+                explanation: "Red Team activities include: Reconnaissance, Vulnerability Scanning/Exploitation, Social Engineering, Post-Exploitation, and Reporting."
+            },
+            {
+                id: 7,
+                question: "Social engineering attacks include phishing, pretexting, and physical infiltration.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Red Team conducts social engineering attacks including phishing, pretexting (creating false scenarios), and physical infiltration to test human defenses."
+            },
+            {
+                id: 8,
+                question: "What is post-exploitation in Red Team operations?",
+                type: "multiple",
+                options: [
+                    "Fixing vulnerabilities after finding them",
+                    "Gaining persistence, escalating privileges, and extracting data",
+                    "Monitoring network traffic",
+                    "Training employees after an attack"
+                ],
+                correct: 1,
+                explanation: "Post-exploitation involves gaining persistence in the system, escalating privileges to higher access levels, and extracting data to demonstrate impact."
+            },
+            {
+                id: 9,
+                question: "Red Team documents findings and provides recommendations to fix weaknesses.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. After testing, Red Team reports their findings, documents vulnerabilities discovered, and provides recommendations to improve security."
+            },
+            {
+                id: 10,
+                question: "Blue Team is also known as the Defensive Security Team.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Blue Team is the Defensive Security Team responsible for protecting, detecting, and responding to security threats in real-time."
+            },
+            {
+                id: 11,
+                question: "What is the primary role of the Blue Team?",
+                type: "multiple",
+                options: [
+                    "Simulate attacks on systems",
+                    "Protect, detect, and respond to security threats in real-time",
+                    "Exploit vulnerabilities",
+                    "Conduct social engineering"
+                ],
+                correct: 1,
+                explanation: "Blue Team protects systems, detects threats, and responds to security incidents in real-time to defend the organization."
+            },
+            {
+                id: 12,
+                question: "SIEM tools are used by Blue Team for network monitoring.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Blue Team uses SIEM (Security Information and Event Management) tools for network monitoring and threat detection."
+            },
+            {
+                id: 13,
+                question: "What does IoC stand for in Blue Team operations?",
+                type: "multiple",
+                options: [
+                    "Internet of Computers",
+                    "Indicators of Compromise",
+                    "Information on Criminals",
+                    "Internal Operations Center"
+                ],
+                correct: 1,
+                explanation: "IoC stands for Indicators of Compromise - signs that a security breach or attack may have occurred, which Blue Team actively hunts for."
+            },
+            {
+                id: 14,
+                question: "Threat hunting involves actively searching for abnormal behavior or indicators of compromise.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Threat hunting is a proactive Blue Team activity where they actively search for abnormal behavior and IoCs before automated systems detect them."
+            },
+            {
+                id: 15,
+                question: "Which is a Blue Team activity?",
+                type: "multiple",
+                options: [
+                    "Exploiting vulnerabilities",
+                    "Incident response: identify, contain, eradicate, and recover",
+                    "Social engineering attacks",
+                    "Post-exploitation"
+                ],
+                correct: 1,
+                explanation: "Blue Team activities include: Network Monitoring, Threat Hunting, Incident Response, System Hardening, and User Awareness Training."
+            },
+            {
+                id: 16,
+                question: "System hardening includes applying patches, updating systems, and enforcing least privilege.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. System hardening involves applying patches, updating systems, enforcing least privilege access, and removing unnecessary services to reduce attack surface."
+            },
+            {
+                id: 17,
+                question: "What is the purpose of user awareness training by Blue Team?",
+                type: "multiple",
+                options: [
+                    "To teach employees how to hack",
+                    "To educate employees to recognize and avoid threats",
+                    "To find vulnerabilities in systems",
+                    "To simulate attacks"
+                ],
+                correct: 1,
+                explanation: "Blue Team conducts user awareness training to educate employees on recognizing and avoiding threats like phishing, social engineering, and malware."
+            },
+            {
+                id: 18,
+                question: "Risk is the potential that a threat will exploit a vulnerability causing harm.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Risk is defined as the potential that a threat will exploit a vulnerability, resulting in harm to the organization."
+            },
+            {
+                id: 19,
+                question: "What is Governance in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "The process of hacking systems",
+                    "The framework of policies, procedures, and responsibilities to manage risks",
+                    "The act of monitoring networks",
+                    "The process of exploiting vulnerabilities"
+                ],
+                correct: 1,
+                explanation: "Governance is the framework of policies, procedures, and responsibilities established to manage cybersecurity risks in alignment with business goals."
+            },
+            {
+                id: 20,
+                question: "The Risk Management Process starts with identifying what could go wrong.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The first step in Risk Management is to identify risks by asking 'What could go wrong?' such as outdated systems or weak passwords."
+            },
+            {
+                id: 21,
+                question: "What are the five steps of the Risk Management Process?",
+                type: "multiple",
+                options: [
+                    "Scan, Exploit, Report, Fix, Monitor",
+                    "Identify, Analyze, Evaluate/Prioritize, Treat, Monitor",
+                    "Detect, Respond, Recover, Report, Train",
+                    "Plan, Execute, Test, Deploy, Review"
+                ],
+                correct: 1,
+                explanation: "Risk Management Process: (1) Identify Risks, (2) Analyze Risks, (3) Evaluate and Prioritize, (4) Treat Risks, (5) Monitor continuously."
+            },
+            {
+                id: 22,
+                question: "Analyzing risks involves determining how likely the risk is and how severe the impact would be.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Risk analysis assesses the likelihood (probability) of the risk occurring and the severity (impact) of potential harm."
+            },
+            {
+                id: 23,
+                question: "What does 'Treat Risks' mean in Risk Management?",
+                type: "multiple",
+                options: [
+                    "Ignore all risks",
+                    "Mitigate, transfer, accept, or avoid the risk",
+                    "Only accept the risk",
+                    "Delete all systems with risks"
+                ],
+                correct: 1,
+                explanation: "Treating risks involves four strategies: Mitigate (reduce), Transfer (insurance), Accept (acknowledge and live with), or Avoid (eliminate the activity)."
+            },
+            {
+                id: 24,
+                question: "Risk monitoring should be done continuously to review risks and controls.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The final step in Risk Management is continuous monitoring to review risks, evaluate controls, and adjust strategies as needed."
+            },
+            {
+                id: 25,
+                question: "Which is part of the Governance Process?",
+                type: "multiple",
+                options: [
+                    "Exploiting vulnerabilities",
+                    "Defining security policies like Acceptable Use and Password policies",
+                    "Conducting phishing attacks",
+                    "Extracting data from systems"
+                ],
+                correct: 1,
+                explanation: "Governance Process includes: Defining security policies (Acceptable Use, Passwords, Remote Access), Compliance, Roles/Responsibilities, and Audits."
+            },
+            {
+                id: 26,
+                question: "Compliance means aligning with standards like NIST, ISO 27001, GDPR, and PCI-DSS.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Compliance involves aligning cybersecurity practices with industry standards and regulations like NIST, ISO 27001, GDPR, and PCI-DSS."
+            },
+            {
+                id: 27,
+                question: "What is the purpose of defining roles and responsibilities in Governance?",
+                type: "multiple",
+                options: [
+                    "To confuse employees",
+                    "To ensure clear accountability (e.g., who responds to incidents)",
+                    "To reduce the number of employees",
+                    "To eliminate security policies"
+                ],
+                correct: 1,
+                explanation: "Defining roles and responsibilities ensures clear accountability - everyone knows their security duties, like who responds to incidents or manages access controls."
+            },
+            {
+                id: 28,
+                question: "Audits and reviews are part of Governance to check compliance and adjust procedures.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Regular audits and reviews are essential in Governance to check compliance with policies, evaluate effectiveness, and adjust procedures as needed."
+            },
+            {
+                id: 29,
+                question: "Which team would conduct vulnerability scanning and exploitation?",
+                type: "multiple",
+                options: [
+                    "Blue Team",
+                    "Red Team",
+                    "Risk Management Team",
+                    "Governance Team"
+                ],
+                correct: 1,
+                explanation: "Red Team (Offensive Security) conducts vulnerability scanning and exploitation to test defenses. Blue Team focuses on defense and monitoring."
+            },
+            {
+                id: 30,
+                question: "Red Team and Blue Team work together to improve overall security posture.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Red Team identifies weaknesses through offensive testing, while Blue Team defends and learns from these tests, together improving security posture."
+            }
+        ];
+
+        const CORRECT_PASSWORD = "Pro@cyber";
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+            displayQuestion(currentQuestion);
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                    return;
+                }
+            }
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work! You've mastered ethical hacking concepts!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job! Strong understanding of Red/Blue Teams!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort! Keep reviewing the material!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying! You're making progress!";
+            } else {
+                message = "💪 Continue learning! Review the chapter carefully!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+            let content = "Chapter 14: Concept of Ethical Hacking - Easy Level Quiz Results\n";
+            content += "===================================================================\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "---------------------------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Chapter14_Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
