@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz Template - Framework Only</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* Password Section */
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #f1f8f4;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #fdeaea;
+            color: #c62828;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Answer Review */
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Chapter 1: Introduction to Cyber Security</h1>
+            <p><strong>Cybersecurity Essentials - Hard Level Assessment</strong></p>
+            <p>30 Questions | Multiple Choice & True/False | Password Protected</p>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your materials.</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 0</span>
+                    <span id="scoreIndicator">Score: 0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="questionsContainer"></div>
+
+            <!-- Button Group -->
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 0</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Chapter 1: Introduction to Cyber Security</strong></p>
+            <p>© 2026 IconicInfoSec | Quiz Framework Template</p>
+            <p>Hard Level Assessment | Auto-generated from PowerPoint Content</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // QUIZ FRAMEWORK - TEMPLATE STRUCTURE
+        // ============================================
+        
+        // STEP 1: Add your quiz data here
+        // Format: Array of question objects
+        const quizData = [
+        {
+                "id": 1,
+                "question": "Which of the following BEST describes the relationship between Information Security and Cybersecurity?",
+                "type": "multiple",
+                "options": [
+                        "Cybersecurity is a subset of Information Security",
+                        "Information Security protects all forms of information while Cybersecurity focuses on digital systems",
+                        "They are identical terms used interchangeably",
+                        "Cybersecurity only deals with network protection"
+                ],
+                "correct": 1,
+                "explanation": "Information Security protects information in ALL forms (digital, paper, verbal), while Cybersecurity specifically protects digital systems, networks, and data from online attacks. InfoSec is broader in scope."
+        },
+        {
+                "id": 2,
+                "question": "The WannaCry ransomware attack of 2017 primarily exploited which vulnerability?",
+                "type": "multiple",
+                "options": [
+                        "Apache Struts framework",
+                        "Windows EternalBlue SMB vulnerability",
+                        "Social engineering on Twitter",
+                        "Unpatched IoT devices"
+                ],
+                "correct": 1,
+                "explanation": "WannaCry exploited the EternalBlue vulnerability in Windows SMB protocol, affecting over 200,000 computers worldwide. This highlighted the critical importance of timely patching and network segmentation."
+        },
+        {
+                "id": 3,
+                "question": "In the CIA Triad, which principle ensures that information is accessible only to authorized users when needed?",
+                "type": "multiple",
+                "options": [
+                        "Confidentiality ensures authorized access",
+                        "Integrity ensures authorized access",
+                        "Availability ensures authorized access",
+                        "All three principles work together for authorized access"
+                ],
+                "correct": 3,
+                "explanation": "While Availability ensures information is accessible when needed, Confidentiality restricts access to authorized users only, and Integrity ensures data remains accurate. All three principles must work together to ensure authorized users can access accurate information when needed."
+        },
+        {
+                "id": 4,
+                "question": "The Equifax data breach of 2017 exposed personal data of 147 million people. What was the root cause?",
+                "type": "multiple",
+                "options": [
+                        "Ransomware attack",
+                        "Unpatched Apache Struts vulnerability",
+                        "Insider threat",
+                        "DDoS attack"
+                ],
+                "correct": 1,
+                "explanation": "The Equifax breach was caused by an unpatched vulnerability in Apache Struts web framework. This emphasizes the critical importance of vulnerability management and timely patching."
+        },
+        {
+                "id": 5,
+                "question": "Which cybersecurity principle is MOST directly violated when an attacker modifies transaction records in a database without authorization?",
+                "type": "multiple",
+                "options": [
+                        "Confidentiality",
+                        "Integrity",
+                        "Availability",
+                        "Non-repudiation"
+                ],
+                "correct": 1,
+                "explanation": "Integrity ensures data accuracy and prevents unauthorized modifications. When transaction records are altered, the integrity of the data is compromised, even if confidentiality and availability remain intact."
+        },
+        {
+                "id": 6,
+                "question": "The 2020 Twitter Bitcoin scam compromised high-profile accounts. What was the primary attack vector?",
+                "type": "multiple",
+                "options": [
+                        "Malware infection",
+                        "Social engineering to access internal tools",
+                        "SQL injection",
+                        "Zero-day exploit"
+                ],
+                "correct": 1,
+                "explanation": "Attackers used social engineering techniques to manipulate Twitter employees and gain access to internal administrative tools. This emphasized the critical role of insider threat prevention and strong IAM policies."
+        },
+        {
+                "id": 7,
+                "question": "Application Security is primarily concerned with protecting which aspect of cybersecurity?",
+                "type": "multiple",
+                "options": [
+                        "Physical infrastructure",
+                        "Network communications",
+                        "Software and applications from threats",
+                        "Personnel safety"
+                ],
+                "correct": 2,
+                "explanation": "Application Security specifically focuses on protecting software and applications from threats throughout their lifecycle, including development, deployment, and maintenance phases."
+        },
+        {
+                "id": 8,
+                "question": "Multi-Factor Authentication (MFA) is part of which key cybersecurity component?",
+                "type": "multiple",
+                "options": [
+                        "Prevention",
+                        "Monitoring",
+                        "Incident Response",
+                        "Compliance"
+                ],
+                "correct": 0,
+                "explanation": "MFA is a preventive security control that stops attacks before they happen by requiring multiple forms of verification. It's implemented alongside firewalls, antivirus, and security policies as part of prevention."
+        },
+        {
+                "id": 9,
+                "question": "Which certification is considered advanced-level and suitable for experienced security professionals in management roles?",
+                "type": "multiple",
+                "options": [
+                        "CompTIA Security+",
+                        "CEH (Certified Ethical Hacker)",
+                        "CISSP (Certified Information Systems Security Professional)",
+                        "Cisco CyberOps Associate"
+                ],
+                "correct": 2,
+                "explanation": "CISSP is an advanced-level certification requiring significant experience (5+ years) and is designed for security professionals in management and leadership roles. Entry-level includes Security+, intermediate includes CEH."
+        },
+        {
+                "id": 10,
+                "question": "In incident response, which phase comes immediately after 'Detection'?",
+                "type": "multiple",
+                "options": [
+                        "Eradication",
+                        "Containment",
+                        "Recovery",
+                        "Post-incident analysis"
+                ],
+                "correct": 1,
+                "explanation": "The incident response phases follow this order: Detection → Containment → Eradication → Recovery → Post-incident analysis. Containment prevents the incident from spreading before removing the threat."
+        },
+        {
+                "id": 11,
+                "question": "Operational Security primarily protects what aspect of an organization?",
+                "type": "multiple",
+                "options": [
+                        "Computer networks",
+                        "Important processes and procedures",
+                        "Physical buildings",
+                        "Individual employees"
+                ],
+                "correct": 1,
+                "explanation": "Operational Security (OPSEC) focuses on protecting critical processes, procedures, and operational activities from compromise, ensuring business operations can continue securely."
+        },
+        {
+                "id": 12,
+                "question": "Remote work and BYOD (Bring Your Own Device) increase cybersecurity risk because:",
+                "type": "multiple",
+                "options": [
+                        "They eliminate the need for firewalls",
+                        "Users may connect through unsecured networks or devices",
+                        "They automatically disable antivirus software",
+                        "They prevent security monitoring"
+                ],
+                "correct": 1,
+                "explanation": "Remote work and BYOD increase risk because users often connect through unsecured home networks or use personal devices with weaker security controls, expanding the attack surface and making centralized security harder to enforce."
+        },
+        {
+                "id": 13,
+                "question": "Which role is responsible for simulating cyberattacks to identify vulnerabilities before malicious actors can exploit them?",
+                "type": "multiple",
+                "options": [
+                        "Security Analyst",
+                        "Incident Responder",
+                        "Penetration Tester (Ethical Hacker)",
+                        "Compliance Officer"
+                ],
+                "correct": 2,
+                "explanation": "Penetration Testers (Ethical Hackers) proactively simulate cyberattacks to discover security weaknesses, using certifications like CEH, OSCP, or PenTest+ to validate their skills."
+        },
+        {
+                "id": 14,
+                "question": "The cybersecurity landscape is described as constantly changing. Which factor is NOT a primary reason for this evolution?",
+                "type": "multiple",
+                "options": [
+                        "Evolving threat actors and attack methods",
+                        "Advancing technology and new vulnerabilities",
+                        "Stable and unchanging compliance requirements",
+                        "Increasing complexity of modern networks"
+                ],
+                "correct": 2,
+                "explanation": "Compliance requirements actually DO change and evolve (like GDPR, new regulations), contributing to the changing landscape. Threats, technology, and network complexity all drive constant evolution in cybersecurity."
+        },
+        {
+                "id": 15,
+                "question": "Data Loss Prevention (DLP) strategies primarily support which cybersecurity component?",
+                "type": "multiple",
+                "options": [
+                        "Incident Response",
+                        "Data Protection",
+                        "Monitoring",
+                        "Compliance only"
+                ],
+                "correct": 1,
+                "explanation": "DLP is a core component of Data Protection, working alongside encryption and access controls to prevent sensitive information from being leaked, stolen, or accessed by unauthorized parties."
+        },
+        {
+                "id": 16,
+                "question": "A Compliance Officer needs to ensure the organization adheres to regulations. Which certification is MOST relevant?",
+                "type": "multiple",
+                "options": [
+                        "OSCP (Offensive Security Certified Professional)",
+                        "CISA (Certified Information Systems Auditor)",
+                        "CEH (Certified Ethical Hacker)",
+                        "CompTIA PenTest+"
+                ],
+                "correct": 1,
+                "explanation": "CISA is specifically designed for audit and compliance professionals. Other relevant certifications include CIPP (Certified Information Privacy Professional) for compliance roles, while OSCP, CEH, and PenTest+ are for offensive security testing."
+        },
+        {
+                "id": 17,
+                "question": "IoT devices expand the attack surface because they often have:",
+                "type": "multiple",
+                "options": [
+                        "Stronger security controls than traditional devices",
+                        "Weaker security controls and limited update mechanisms",
+                        "Built-in advanced firewalls",
+                        "No network connectivity"
+                ],
+                "correct": 1,
+                "explanation": "IoT devices typically have weaker security controls, limited processing power for security features, infrequent updates, and default credentials, making them easy targets that expand an organization's attack surface."
+        },
+        {
+                "id": 18,
+                "question": "Which element is identified as a MAJOR cause of security breaches in the 'Human Factor'?",
+                "type": "multiple",
+                "options": [
+                        "Advanced persistent threats",
+                        "Zero-day vulnerabilities",
+                        "Human error, weak passwords, and phishing attacks",
+                        "DDoS attacks"
+                ],
+                "correct": 2,
+                "explanation": "Human error, weak passwords, and falling for phishing attacks remain major causes of breaches. Social engineering targets people rather than technical systems, making security awareness training essential."
+        },
+        {
+                "id": 19,
+                "question": "An Incident Responder should ideally have experience in which area before specializing?",
+                "type": "multiple",
+                "options": [
+                        "Legal and compliance",
+                        "IT or network administration, SOC operations",
+                        "Physical security",
+                        "Marketing and communications"
+                ],
+                "correct": 1,
+                "explanation": "Incident Responders typically build on experience in IT/network administration, helpdesk support, or Security Operations Center (SOC) roles to understand system operations before specializing in incident handling."
+        },
+        {
+                "id": 20,
+                "question": "Network Security specifically protects:",
+                "type": "multiple",
+                "options": [
+                        "Only wireless networks",
+                        "Network systems and communication channels",
+                        "Only physical network cables",
+                        "Application source code"
+                ],
+                "correct": 1,
+                "explanation": "Network Security encompasses protection of entire network infrastructure, including routers, switches, communication channels, protocols, and data in transit across both wired and wireless networks."
+        },
+        {
+                "id": 21,
+                "question": "The WannaCry attack highlighted the importance of which TWO security practices?",
+                "type": "multiple",
+                "options": [
+                        "Social media monitoring and content filtering",
+                        "Patching systems and network segmentation",
+                        "Physical security and access badges",
+                        "Email encryption and data archiving"
+                ],
+                "correct": 1,
+                "explanation": "WannaCry spread through unpatched Windows systems and moved laterally across networks. This emphasized the critical need for timely patching and network segmentation to limit the spread of threats."
+        },
+        {
+                "id": 22,
+                "question": "Which intermediate-level certification is specifically designed for security analysts?",
+                "type": "multiple",
+                "options": [
+                        "CompTIA Security+",
+                        "CySA+ (Cybersecurity Analyst)",
+                        "CISSP",
+                        "Cisco CyberOps Associate"
+                ],
+                "correct": 1,
+                "explanation": "CySA+ (Cybersecurity Analyst) is an intermediate certification focused on behavioral analytics and threat detection for security analyst roles. Security+ is entry-level, CISSP is advanced, and CyberOps Associate is entry-level."
+        },
+        {
+                "id": 23,
+                "question": "Identity and Access Management (IAM) ensures that:",
+                "type": "multiple",
+                "options": [
+                        "All users have administrator privileges",
+                        "Users only have the access they need (principle of least privilege)",
+                        "Anonymous access is always allowed",
+                        "Password policies are eliminated"
+                ],
+                "correct": 1,
+                "explanation": "IAM controls who can access systems and data based on the principle of least privilege, ensuring users only have access necessary for their role, reducing potential damage from compromised accounts."
+        },
+        {
+                "id": 24,
+                "question": "Continuous monitoring of systems and networks for suspicious activity is part of which cybersecurity component?",
+                "type": "multiple",
+                "options": [
+                        "Prevention",
+                        "Monitoring",
+                        "Data Protection",
+                        "Compliance"
+                ],
+                "correct": 1,
+                "explanation": "Monitoring involves continuously watching systems and networks using SIEM tools, IDS/IPS, and log analysis to detect threats early before they cause significant damage."
+        },
+        {
+                "id": 25,
+                "question": "Security Analysts are responsible for all of the following EXCEPT:",
+                "type": "multiple",
+                "options": [
+                        "Monitoring security alerts and assessing threats",
+                        "Conducting penetration testing and ethical hacking",
+                        "Implementing security policies and procedures",
+                        "Collaborating with IT staff to improve security measures"
+                ],
+                "correct": 1,
+                "explanation": "Penetration testing and ethical hacking are the specialized responsibilities of Penetration Testers, not Security Analysts. Security Analysts focus on monitoring, assessment, policy implementation, and collaboration."
+        },
+        {
+                "id": 26,
+                "question": "Resource constraints make cybersecurity challenging because organizations face:",
+                "type": "multiple",
+                "options": [
+                        "Unlimited budget and excessive staffing",
+                        "Limited budget and staff, affecting security implementation and incident response",
+                        "Too many security tools to manage",
+                        "Excessive regulatory requirements only"
+                ],
+                "correct": 1,
+                "explanation": "Limited budget and staffing constraints prevent organizations from implementing comprehensive security controls and responding quickly to incidents, making prioritization and risk management critical."
+        },
+        {
+                "id": 27,
+                "question": "Which law or standard specifically governs healthcare data protection in the United States?",
+                "type": "multiple",
+                "options": [
+                        "GDPR (General Data Protection Regulation)",
+                        "PCI-DSS (Payment Card Industry Data Security Standard)",
+                        "HIPAA (Health Insurance Portability and Accountability Act)",
+                        "SOX (Sarbanes-Oxley Act)"
+                ],
+                "correct": 2,
+                "explanation": "HIPAA specifically governs healthcare data protection and patient privacy in the US. GDPR is for EU data protection, PCI-DSS is for payment card data, and SOX is for financial reporting."
+        },
+        {
+                "id": 28,
+                "question": "The Equifax breach resulted in which primary consequences?",
+                "type": "multiple",
+                "options": [
+                        "Minor financial impact only",
+                        "Huge financial loss and reputational damage",
+                        "Improved market share",
+                        "No significant consequences"
+                ],
+                "correct": 1,
+                "explanation": "The Equifax breach resulted in massive financial losses (settlements, legal costs), severe reputational damage, loss of consumer trust, and regulatory penalties, demonstrating the serious business impact of security failures."
+        },
+        {
+                "id": 29,
+                "question": "Physical Security in the context of comprehensive security protects:",
+                "type": "multiple",
+                "options": [
+                        "Only digital data",
+                        "Buildings, devices, and people",
+                        "Only network infrastructure",
+                        "Only software applications"
+                ],
+                "correct": 1,
+                "explanation": "Physical Security protects tangible assets including buildings, physical devices (servers, workstations), infrastructure, and people from physical threats like theft, unauthorized access, and environmental hazards."
+        },
+        {
+                "id": 30,
+                "question": "Vulnerabilities in the cybersecurity landscape can arise from:",
+                "type": "multiple",
+                "options": [
+                        "Only zero-day exploits",
+                        "Unpatched software, poor configurations, or human error",
+                        "Only network architecture issues",
+                        "Strong security policies"
+                ],
+                "correct": 1,
+                "explanation": "Vulnerabilities come from multiple sources: unpatched software (missing security updates), misconfigurations (weak settings), human error (mistakes), weak passwords, and poor security practices, not just zero-days."
+        }
+];
+
+        // STEP 2: Set your password
+        const CORRECT_PASSWORD = "Pro@cyber";
+        
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // ============================================
+        // CORE FUNCTIONS
+        // ============================================
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            if (quizData.length === 0) {
+                alert("No questions added to quiz data!");
+                return;
+            }
+
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+            const inputType = question.type === "multiple" ? "radio" : "checkbox";
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "Quiz completed!";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying!";
+            } else {
+                message = "💪 Continue learning!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            // Answer review
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+            let content = "Quiz Results\n";
+            content += "============\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "-----------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

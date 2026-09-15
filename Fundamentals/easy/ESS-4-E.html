@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: CIA & Core Security Concepts - Easy Level Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* Password Section */
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #f1f8f4;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #fdeaea;
+            color: #c62828;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Answer Review */
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Chapter 4: CIA & Core Security Concepts</h1>
+            <p><strong>Cyber Security Essential - Easy Level Quiz</strong></p>
+            <p>30 Questions | Multiple Choice, True/False & Matching</p>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your course materials.</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 30</span>
+                    <span id="scoreIndicator">Answered: 0/30</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="questionsContainer"></div>
+
+            <!-- Button Group -->
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 30</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Chapter 4: CIA & Core Security Concepts | Easy Level</strong></p>
+            <p>© 2026 Cyber Security Essential Course</p>
+            <p>Password Protected Quiz Framework</p>
+        </div>
+    </div>
+
+    <script>
+        // Quiz Data - Chapter 4: CIA & Core Security Concepts
+        const quizData = [
+            {
+                id: 1,
+                question: "What does CIA stand for in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "Confidentiality, Integrity, Availability",
+                    "Central Intelligence Agency",
+                    "Computer Information Access",
+                    "Cyber Internet Authentication"
+                ],
+                correct: 0,
+                explanation: "CIA stands for Confidentiality, Integrity, and Availability - the three core principles of information security that protect data and systems."
+            },
+            {
+                id: 2,
+                question: "Confidentiality prevents the disclosure of information to unauthorized people, resources, or processes.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Confidentiality, also known as privacy, ensures that only authorized individuals can access sensitive information."
+            },
+            {
+                id: 3,
+                question: "Which CIA principle ensures that data remains accurate, complete, and unchanged by unauthorized users?",
+                type: "multiple",
+                options: [
+                    "Confidentiality",
+                    "Integrity",
+                    "Availability",
+                    "Authentication"
+                ],
+                correct: 1,
+                explanation: "Integrity ensures that data remains accurate, complete, and unchanged throughout its lifecycle, preventing unauthorized modifications."
+            },
+            {
+                id: 4,
+                question: "Availability ensures that information is accessible by authorized users when needed.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Availability ensures that authorized users have timely and reliable access to information and resources when needed."
+            },
+            {
+                id: 5,
+                question: "What does AAA stand for in cybersecurity?",
+                type: "multiple",
+                options: [
+                    "Access, Audit, Authorization",
+                    "Authentication, Authorization, Accounting",
+                    "Availability, Audit, Authentication",
+                    "Authorization, Accounting, Access"
+                ],
+                correct: 1,
+                explanation: "AAA stands for Authentication (verifies identity), Authorization (determines access rights), and Accounting (tracks user activities)."
+            },
+            {
+                id: 6,
+                question: "Authentication verifies the identity of a user to prevent unauthorized access.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Authentication verifies user identity through something you know (password), have (token), or are (biometric)."
+            },
+            {
+                id: 7,
+                question: "Which of the following is NOT a method used in authentication?",
+                type: "multiple",
+                options: [
+                    "Something you know (password)",
+                    "Something you have (token)",
+                    "Something you are (fingerprint)",
+                    "Something you want (preferences)"
+                ],
+                correct: 3,
+                explanation: "Authentication uses three factors: something you know, have, or are. 'Something you want' is not an authentication factor."
+            },
+            {
+                id: 8,
+                question: "Hashing is used to detect whether data has been changed.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Hashing creates a unique fingerprint of data that changes if the data is modified, helping detect tampering."
+            },
+            {
+                id: 9,
+                question: "How many states of data does the Cybersecurity Cube identify?",
+                type: "multiple",
+                options: [
+                    "2 states",
+                    "3 states",
+                    "4 states",
+                    "5 states"
+                ],
+                correct: 1,
+                explanation: "The Cybersecurity Cube identifies 3 states of data: data in transit, data at rest (storage), and data in process (use)."
+            },
+            {
+                id: 10,
+                question: "Data in transit refers to data being sent from one device to another.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Data in transit involves information moving between devices via sneaker net (USB), wired networks, or wireless networks."
+            },
+            {
+                id: 11,
+                question: "Which of the following is NOT a state of data?",
+                type: "multiple",
+                options: [
+                    "Data in transit",
+                    "Data at rest",
+                    "Data in process",
+                    "Data in encryption"
+                ],
+                correct: 3,
+                explanation: "The three states of data are: in transit (being transmitted), at rest (stored), and in process (being used). 'Data in encryption' is not a state."
+            },
+            {
+                id: 12,
+                question: "Data at rest refers to data stored on devices like hard drives, USBs, or network storage.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Data at rest is stored data that resides on devices such as DAS, RAID, NAS, or SAN when not actively being used."
+            },
+            {
+                id: 13,
+                question: "What does DAS stand for in storage terminology?",
+                type: "multiple",
+                options: [
+                    "Direct Access System",
+                    "Direct Attached Storage",
+                    "Data Access Service",
+                    "Digital Archive System"
+                ],
+                correct: 1,
+                explanation: "DAS stands for Direct Attached Storage - storage directly connected to a computer without going through a network."
+            },
+            {
+                id: 14,
+                question: "Data in process refers to data during input, modification, computation, or output.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Data in process is data being actively used, including input collection, editing, processing, encoding/decoding, or output."
+            },
+            {
+                id: 15,
+                question: "Which layer of the OSI model deals with physical connections like cables and hubs?",
+                type: "multiple",
+                options: [
+                    "Layer 1 - Physical",
+                    "Layer 2 - Data Link",
+                    "Layer 3 - Network",
+                    "Layer 7 - Application"
+                ],
+                correct: 0,
+                explanation: "Layer 1 (Physical Layer) deals with physical connections including cables, hubs, and network interface cards (NICs)."
+            },
+            {
+                id: 16,
+                question: "The OSI model has 7 layers while the TCP/IP model has 4 layers.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The OSI model has 7 layers (Application, Presentation, Session, Transport, Network, Data Link, Physical) while TCP/IP has 4 layers."
+            },
+            {
+                id: 17,
+                question: "Which protocol uses port 443?",
+                type: "multiple",
+                options: [
+                    "HTTP",
+                    "HTTPS",
+                    "FTP",
+                    "SSH"
+                ],
+                correct: 1,
+                explanation: "HTTPS (Hypertext Transfer Protocol Secure) uses port 443 for encrypted web traffic, while HTTP uses port 80."
+            },
+            {
+                id: 18,
+                question: "SSH (Secure Shell) uses port 22 for secure remote login.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. SSH uses port 22 to provide secure encrypted remote login and command execution on remote systems."
+            },
+            {
+                id: 19,
+                question: "What is the port range for well-known ports?",
+                type: "multiple",
+                options: [
+                    "0-1023",
+                    "1024-49151",
+                    "49152-65535",
+                    "0-65535"
+                ],
+                correct: 0,
+                explanation: "Well-known ports range from 0-1023 and are used by standard protocols. Registered ports are 1024-49151, and dynamic ports are 49152-65535."
+            },
+            {
+                id: 20,
+                question: "A firewall's main job is to inspect traffic, and its default action is to drop suspicious packets.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Firewalls inspect network traffic and by default drop (block) packets that don't meet security rules, protecting the network."
+            },
+            {
+                id: 21,
+                question: "Which type of firewall operates at Layer 2 and makes decisions based on MAC addresses?",
+                type: "multiple",
+                options: [
+                    "Transparent Firewall",
+                    "Packet-Filtering Firewall",
+                    "Application Firewall",
+                    "Next-Generation Firewall"
+                ],
+                correct: 0,
+                explanation: "Layer 2 Transparent Firewalls operate at the Data Link layer and filter traffic based on MAC addresses for LAN segmentation."
+            },
+            {
+                id: 22,
+                question: "Layer 7 firewalls can inspect and filter traffic based on application data like HTTP or FTP.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Layer 7 (Application Layer) firewalls inspect actual application data and can perform deep packet inspection and content filtering."
+            },
+            {
+                id: 23,
+                question: "What does IPS stand for in network security?",
+                type: "multiple",
+                options: [
+                    "Internet Protocol Security",
+                    "Intrusion Prevention System",
+                    "Internal Protection Service",
+                    "IP Packet Scanner"
+                ],
+                correct: 1,
+                explanation: "IPS stands for Intrusion Prevention System - a network security tool that monitors traffic for malicious activity and takes action to prevent it."
+            },
+            {
+                id: 24,
+                question: "UTM stands for Unified Threat Management and combines multiple security features.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. UTM appliances combine firewall, IPS, bandwidth control, anti-malware, sandbox, and SD-WAN into one unified solution."
+            },
+            {
+                id: 25,
+                question: "What does VPN stand for?",
+                type: "multiple",
+                options: [
+                    "Virtual Private Network",
+                    "Very Protected Network",
+                    "Variable Protocol Network",
+                    "Verified Public Network"
+                ],
+                correct: 0,
+                explanation: "VPN stands for Virtual Private Network - a technology that creates a secure, encrypted connection over the internet."
+            },
+            {
+                id: 26,
+                question: "Remote Access VPN connects individual users to a remote network from anywhere via the internet.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Remote Access VPN (Client-to-Site) allows individual users like remote workers to securely connect to company resources."
+            },
+            {
+                id: 27,
+                question: "Which VPN type connects entire networks to each other?",
+                type: "multiple",
+                options: [
+                    "Remote Access VPN",
+                    "Client VPN",
+                    "Site-to-Site VPN",
+                    "Personal VPN"
+                ],
+                correct: 2,
+                explanation: "Site-to-Site VPN connects entire networks (e.g., two office locations) and includes Intranet VPN (same org) and Extranet VPN (different orgs)."
+            },
+            {
+                id: 28,
+                question: "IPsec is a protocol suite used to secure internet protocol communications through authentication and encryption.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. IPsec authenticates and encrypts each IP packet in a communication session, providing secure VPN connections."
+            },
+            {
+                id: 29,
+                question: "What does SIEM stand for?",
+                type: "multiple",
+                options: [
+                    "Security Information and Event Management",
+                    "System Internet Email Monitor",
+                    "Secure Internal Event Monitoring",
+                    "Software Integration Event Manager"
+                ],
+                correct: 0,
+                explanation: "SIEM stands for Security Information and Event Management - systems that collect logs and detect threats through analysis (e.g., Splunk, QRadar, ELK)."
+            },
+            {
+                id: 30,
+                question: "Redundancy, backups, and disaster recovery plans are methods to ensure availability.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Availability is ensured through redundancy (backup systems), regular backups, resiliency, maintenance, updates, and disaster recovery plans."
+            }
+        ];
+
+        // Password
+        const CORRECT_PASSWORD = "Pro@cyber";
+        
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // Initialize answers array
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        // Check password
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        // Display question
+        function displayQuestion(index) {
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+            const inputType = question.type === "multiple" ? "radio" : "radio";
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        // Select answer
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+            displayQuestion(currentQuestion);
+        }
+
+        // Update progress
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        // Update buttons
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        // Next question
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        // Previous question
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                    return;
+                }
+            }
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        // Calculate score
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        // Display results
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work! You've mastered CIA concepts!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job! Strong understanding of security!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort! Keep reviewing the material!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying! You're making progress!";
+            } else {
+                message = "💪 Continue learning! Review the chapter carefully!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            // Answer review
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        // Download results
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+            let content = "Chapter 4: CIA & Core Security Concepts - Easy Level Quiz Results\n";
+            content += "=================================================================\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "---------------------------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Chapter4_Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Initialize
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

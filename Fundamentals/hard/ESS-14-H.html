@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 14: Red Team, Blue Team, and Risk/Governance - Hard Q&amp;A</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* Password Section */
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #f1f8f4;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #fdeaea;
+            color: #c62828;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Answer Review */
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Chapter 14: Red Team, Blue Team, and Risk/Governance</h1>
+            <p><strong>Cybersecurity Essentials — Hard-Level Q&amp;A Assessment</strong></p>
+            <p>30 Questions | Multiple Choice, True/False &amp; Matching | Password Protected</p>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your materials.</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 0</span>
+                    <span id="scoreIndicator">Score: 0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="questionsContainer"></div>
+
+            <!-- Button Group -->
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 0</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Chapter 14: Red Team, Blue Team, and Risk/Governance</strong></p>
+            <p>© 2026 IconicInfoSec | Quiz Framework Template</p>
+            <p>Hard Level Assessment | Based on the chapter PowerPoint</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // QUIZ FRAMEWORK - TEMPLATE STRUCTURE
+        // ============================================
+        
+        // STEP 1: Add your quiz data here
+        // Format: Array of question objects
+        const quizData = [
+        {
+                "id": 1,
+                "question": "A team ethically simulates real-world attacks to test defenses. Which team?",
+                "type": "multiple",
+                "options": [
+                        "Red team",
+                        "OSINT",
+                        "Exploitation",
+                        "Social engineering"
+                ],
+                "correct": 0,
+                "explanation": "The red team performs offensive security testing."
+        },
+        {
+                "id": 2,
+                "question": "Collecting public and internal information before an assessment is what phase?",
+                "type": "multiple",
+                "options": [
+                        "Reconnaissance",
+                        "Exploitation",
+                        "Social engineering",
+                        "Post-exploitation"
+                ],
+                "correct": 0,
+                "explanation": "Reconnaissance gathers intelligence about the target."
+        },
+        {
+                "id": 3,
+                "question": "Publicly available information used during reconnaissance is called what?",
+                "type": "multiple",
+                "options": [
+                        "OSINT",
+                        "Social engineering",
+                        "Post-exploitation",
+                        "Red-team reporting"
+                ],
+                "correct": 0,
+                "explanation": "OSINT is open-source intelligence."
+        },
+        {
+                "id": 4,
+                "question": "A tester uses a discovered weakness to demonstrate impact. What activity?",
+                "type": "multiple",
+                "options": [
+                        "Exploitation",
+                        "Post-exploitation",
+                        "Red-team reporting",
+                        "Blue team"
+                ],
+                "correct": 0,
+                "explanation": "Exploitation validates whether a vulnerability is usable."
+        },
+        {
+                "id": 5,
+                "question": "Phishing or pretexting tests human resistance under authorization. What activity?",
+                "type": "multiple",
+                "options": [
+                        "Social engineering",
+                        "Red-team reporting",
+                        "Blue team",
+                        "Network monitoring"
+                ],
+                "correct": 0,
+                "explanation": "Social engineering assesses people as an attack surface."
+        },
+        {
+                "id": 6,
+                "question": "Maintaining persistence and escalating privileges after entry is what phase?",
+                "type": "multiple",
+                "options": [
+                        "Post-exploitation",
+                        "Blue team",
+                        "Network monitoring",
+                        "Threat hunting"
+                ],
+                "correct": 0,
+                "explanation": "Post-exploitation measures the consequences of initial compromise."
+        },
+        {
+                "id": 7,
+                "question": "Documenting findings and recommendations completes which activity?",
+                "type": "multiple",
+                "options": [
+                        "Red-team reporting",
+                        "Network monitoring",
+                        "Threat hunting",
+                        "Incident response"
+                ],
+                "correct": 0,
+                "explanation": "Reporting communicates evidence, impact, and remediation."
+        },
+        {
+                "id": 8,
+                "question": "A team protects, detects, and responds to live threats. Which team?",
+                "type": "multiple",
+                "options": [
+                        "Blue team",
+                        "Threat hunting",
+                        "Incident response",
+                        "System hardening"
+                ],
+                "correct": 0,
+                "explanation": "The blue team performs defensive operations."
+        },
+        {
+                "id": 9,
+                "question": "SIEM telemetry is reviewed for malicious indicators. What blue-team activity?",
+                "type": "multiple",
+                "options": [
+                        "Network monitoring",
+                        "Incident response",
+                        "System hardening",
+                        "Risk"
+                ],
+                "correct": 0,
+                "explanation": "Network monitoring detects suspicious activity."
+        },
+        {
+                "id": 10,
+                "question": "Analysts proactively search for indicators without waiting for alerts. What activity?",
+                "type": "multiple",
+                "options": [
+                        "Threat hunting",
+                        "System hardening",
+                        "Risk",
+                        "Governance"
+                ],
+                "correct": 0,
+                "explanation": "Threat hunting seeks hidden compromise."
+        },
+        {
+                "id": 11,
+                "question": "Defenders identify, contain, eradicate, and recover from attacks. What process?",
+                "type": "multiple",
+                "options": [
+                        "Incident response",
+                        "Risk",
+                        "Governance",
+                        "Risk identification"
+                ],
+                "correct": 0,
+                "explanation": "Incident response manages confirmed incidents."
+        },
+        {
+                "id": 12,
+                "question": "Patching, secure configuration, and least privilege reduce attack surface. What activity?",
+                "type": "multiple",
+                "options": [
+                        "System hardening",
+                        "Governance",
+                        "Risk identification",
+                        "Risk analysis"
+                ],
+                "correct": 0,
+                "explanation": "Hardening strengthens systems before compromise."
+        },
+        {
+                "id": 13,
+                "question": "The possibility that a threat exploits a vulnerability and causes harm is what?",
+                "type": "multiple",
+                "options": [
+                        "Risk",
+                        "Risk identification",
+                        "Risk analysis",
+                        "Risk prioritization"
+                ],
+                "correct": 0,
+                "explanation": "Risk combines threat, vulnerability, and potential impact."
+        },
+        {
+                "id": 14,
+                "question": "Policies, responsibilities, and oversight align security with business goals. What is this?",
+                "type": "multiple",
+                "options": [
+                        "Governance",
+                        "Risk analysis",
+                        "Risk prioritization",
+                        "Risk treatment"
+                ],
+                "correct": 0,
+                "explanation": "Governance directs and oversees cybersecurity."
+        },
+        {
+                "id": 15,
+                "question": "Asking “what could go wrong?” is which risk step?",
+                "type": "multiple",
+                "options": [
+                        "Risk identification",
+                        "Risk prioritization",
+                        "Risk treatment",
+                        "Compliance"
+                ],
+                "correct": 0,
+                "explanation": "Identification catalogs possible risks."
+        },
+        {
+                "id": 16,
+                "question": "Estimating likelihood and severity is which step?",
+                "type": "multiple",
+                "options": [
+                        "Risk analysis",
+                        "Risk treatment",
+                        "Compliance",
+                        "Accountability"
+                ],
+                "correct": 0,
+                "explanation": "Analysis evaluates probability and impact."
+        },
+        {
+                "id": 17,
+                "question": "Ranking risks from critical to low is which step?",
+                "type": "multiple",
+                "options": [
+                        "Risk prioritization",
+                        "Compliance",
+                        "Accountability",
+                        "Red team"
+                ],
+                "correct": 0,
+                "explanation": "Evaluation and prioritization guide treatment order."
+        },
+        {
+                "id": 18,
+                "question": "Mitigate, transfer, accept, or avoid are examples of what?",
+                "type": "multiple",
+                "options": [
+                        "Risk treatment",
+                        "Accountability",
+                        "Red team",
+                        "Reconnaissance"
+                ],
+                "correct": 0,
+                "explanation": "Treatment selects a response strategy."
+        },
+        {
+                "id": 19,
+                "question": "Aligning with NIST, ISO 27001, GDPR, and PCI-DSS is what governance activity?",
+                "type": "multiple",
+                "options": [
+                        "Compliance",
+                        "Red team",
+                        "Reconnaissance",
+                        "OSINT"
+                ],
+                "correct": 0,
+                "explanation": "Compliance aligns controls with obligations and standards."
+        },
+        {
+                "id": 20,
+                "question": "Assigning who responds to an incident establishes what?",
+                "type": "multiple",
+                "options": [
+                        "Accountability",
+                        "Reconnaissance",
+                        "OSINT",
+                        "Exploitation"
+                ],
+                "correct": 0,
+                "explanation": "Clear roles create accountability."
+        },
+        {
+                "id": 21,
+                "question": "Red team is a concept or control addressed in this chapter.",
+                "type": "true-false",
+                "options": [
+                        "True",
+                        "False"
+                ],
+                "correct": 0,
+                "explanation": "Red team is covered in the chapter material."
+        },
+        {
+                "id": 22,
+                "question": "Reconnaissance is a concept or control addressed in this chapter.",
+                "type": "true-false",
+                "options": [
+                        "True",
+                        "False"
+                ],
+                "correct": 0,
+                "explanation": "Reconnaissance is covered in the chapter material."
+        },
+        {
+                "id": 23,
+                "question": "OSINT is a concept or control addressed in this chapter.",
+                "type": "true-false",
+                "options": [
+                        "True",
+                        "False"
+                ],
+                "correct": 0,
+                "explanation": "OSINT is covered in the chapter material."
+        },
+        {
+                "id": 24,
+                "question": "Exploitation is a concept or control addressed in this chapter.",
+                "type": "true-false",
+                "options": [
+                        "True",
+                        "False"
+                ],
+                "correct": 0,
+                "explanation": "Exploitation is covered in the chapter material."
+        },
+        {
+                "id": 25,
+                "question": "Social engineering is a concept or control addressed in this chapter.",
+                "type": "true-false",
+                "options": [
+                        "True",
+                        "False"
+                ],
+                "correct": 0,
+                "explanation": "Social engineering is covered in the chapter material."
+        },
+        {
+                "id": 26,
+                "question": "Match the concept to its best description: Post-exploitation",
+                "type": "matching",
+                "options": [
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise."
+                ],
+                "correct": 0,
+                "explanation": "Post-exploitation measures the consequences of initial compromise."
+        },
+        {
+                "id": 27,
+                "question": "Match the concept to its best description: Red-team reporting",
+                "type": "matching",
+                "options": [
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise."
+                ],
+                "correct": 1,
+                "explanation": "Reporting communicates evidence, impact, and remediation."
+        },
+        {
+                "id": 28,
+                "question": "Match the concept to its best description: Blue team",
+                "type": "matching",
+                "options": [
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise."
+                ],
+                "correct": 2,
+                "explanation": "The blue team performs defensive operations."
+        },
+        {
+                "id": 29,
+                "question": "Match the concept to its best description: Network monitoring",
+                "type": "matching",
+                "options": [
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise."
+                ],
+                "correct": 3,
+                "explanation": "Network monitoring detects suspicious activity."
+        },
+        {
+                "id": 30,
+                "question": "Match the concept to its best description: Threat hunting",
+                "type": "matching",
+                "options": [
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise.",
+                        "Post-exploitation — Post-exploitation measures the consequences of initial compromise."
+                ],
+                "correct": 4,
+                "explanation": "Threat hunting seeks hidden compromise."
+        }
+];
+        // STEP 2: Set your password
+        const CORRECT_PASSWORD = "Pro@cyber";
+        
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // ============================================
+        // CORE FUNCTIONS
+        // ============================================
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            if (quizData.length === 0) {
+                alert("No questions added to quiz data!");
+                return;
+            }
+
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+            const inputType = (question.type === "multiple" || question.type === "matching" || question.type === "true-false") ? "radio" : "checkbox";
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : (question.type === "matching" ? "MATCHING" : "MULTIPLE CHOICE")}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "Quiz completed!";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying!";
+            } else {
+                message = "💪 Continue learning!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            // Answer review
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+            let content = "Quiz Results\n";
+            content += "============\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "-----------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Cybersecurity Frameworks - Easy Level Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* Password Section */
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #f1f8f4;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #fdeaea;
+            color: #c62828;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Answer Review */
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Chapter 3: Cybersecurity Frameworks</h1>
+            <p><strong>Cyber Security Essential - Easy Level Quiz</strong></p>
+            <p>30 Questions | Multiple Choice, True/False & Matching</p>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your course materials.</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 30</span>
+                    <span id="scoreIndicator">Answered: 0/30</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="questionsContainer"></div>
+
+            <!-- Button Group -->
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 30</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Chapter 3: Cybersecurity Frameworks | Easy Level</strong></p>
+            <p>© 2026 Cyber Security Essential Course</p>
+            <p>Password Protected Quiz Framework</p>
+        </div>
+    </div>
+
+    <script>
+        // Quiz Data - Chapter 3: Cybersecurity Frameworks
+        const quizData = [
+            {
+                id: 1,
+                question: "What are cybersecurity frameworks?",
+                type: "multiple",
+                options: [
+                    "Structured sets of guidelines, best practices, and standards for managing security",
+                    "Hardware devices that protect networks",
+                    "Software applications for virus scanning",
+                    "Types of encryption algorithms"
+                ],
+                correct: 0,
+                explanation: "Cybersecurity frameworks are structured sets of guidelines, best practices, and standards used to manage and improve an organization's security posture."
+            },
+            {
+                id: 2,
+                question: "NIST stands for National Institute of Standards and Technology.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. NIST (National Institute of Standards and Technology) is a U.S. agency that developed the widely-used NIST Cybersecurity Framework."
+            },
+            {
+                id: 3,
+                question: "Which of the following is NOT a popular cybersecurity framework?",
+                type: "multiple",
+                options: [
+                    "NIST Cybersecurity Framework",
+                    "ISO/IEC 27001",
+                    "CIS Controls",
+                    "Microsoft Word"
+                ],
+                correct: 3,
+                explanation: "Microsoft Word is a word processing application, not a cybersecurity framework. NIST, ISO/IEC 27001, and CIS Controls are all legitimate frameworks."
+            },
+            {
+                id: 4,
+                question: "The NIST Cybersecurity Framework was released in February 2014.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The NIST Cybersecurity Framework was released in February 2014 in response to the need for improved cybersecurity practices."
+            },
+            {
+                id: 5,
+                question: "How many core functions does the NIST Framework have?",
+                type: "multiple",
+                options: [
+                    "3 functions",
+                    "5 functions",
+                    "7 functions",
+                    "10 functions"
+                ],
+                correct: 1,
+                explanation: "The NIST Framework has 5 core functions: Identify, Protect, Detect, Respond, and Recover."
+            },
+            {
+                id: 6,
+                question: "Which NIST core function involves developing an understanding of the organization to manage cybersecurity risk?",
+                type: "multiple",
+                options: [
+                    "Protect",
+                    "Detect",
+                    "Identify",
+                    "Respond"
+                ],
+                correct: 2,
+                explanation: "Identify is the core function that involves developing an understanding of the organization, including asset management, risk assessment, and governance."
+            },
+            {
+                id: 7,
+                question: "The 'Protect' function implements safeguards to ensure delivery of critical services.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The Protect function involves implementing appropriate safeguards including access control, awareness training, data security, and protective technologies."
+            },
+            {
+                id: 8,
+                question: "Which core function focuses on identifying the occurrence of a cybersecurity event?",
+                type: "multiple",
+                options: [
+                    "Identify",
+                    "Protect",
+                    "Detect",
+                    "Recover"
+                ],
+                correct: 2,
+                explanation: "Detect focuses on developing and implementing activities to identify cybersecurity events through continuous monitoring and anomaly detection."
+            },
+            {
+                id: 9,
+                question: "The 'Respond' function deals with taking appropriate actions regarding detected incidents.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The Respond function includes response planning, communications, analysis, and improvements based on lessons learned from incidents."
+            },
+            {
+                id: 10,
+                question: "Which core function maintains plans for resilience and restoration of capabilities?",
+                type: "multiple",
+                options: [
+                    "Identify",
+                    "Protect",
+                    "Respond",
+                    "Recover"
+                ],
+                correct: 3,
+                explanation: "Recover maintains plans for resilience and restores capabilities or services that were impaired due to a cybersecurity incident."
+            },
+            {
+                id: 11,
+                question: "ISO/IEC 27001 is related to Information Security Management Systems.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. ISO/IEC 27001 provides requirements for establishing, implementing, maintaining, and improving an Information Security Management System (ISMS)."
+            },
+            {
+                id: 12,
+                question: "What does CIS stand for in CIS Controls?",
+                type: "multiple",
+                options: [
+                    "Computer Internet Security",
+                    "Center for Internet Security",
+                    "Certified Information Systems",
+                    "Central Intelligence Security"
+                ],
+                correct: 1,
+                explanation: "CIS stands for Center for Internet Security, which provides a set of critical security controls and best practices."
+            },
+            {
+                id: 13,
+                question: "COBIT stands for Control Objectives for Information and Related Technologies.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. COBIT (Control Objectives for Information and Related Technologies) is a framework for IT governance and management."
+            },
+            {
+                id: 14,
+                question: "What does GDPR stand for?",
+                type: "multiple",
+                options: [
+                    "General Data Protection Regulation",
+                    "Global Digital Privacy Rules",
+                    "Government Data Processing Requirements",
+                    "General Database Protection Registry"
+                ],
+                correct: 0,
+                explanation: "GDPR stands for General Data Protection Regulation, a comprehensive EU data protection law that came into effect on May 25, 2018."
+            },
+            {
+                id: 15,
+                question: "GDPR applies only to organizations based in the European Union.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 1,
+                explanation: "False. GDPR applies to any organization processing personal data of individuals residing in the EU, regardless of where the organization is based."
+            },
+            {
+                id: 16,
+                question: "Which of the following is NOT a right under GDPR?",
+                type: "multiple",
+                options: [
+                    "Right to Access",
+                    "Right to Erasure (Right to be Forgotten)",
+                    "Right to Data Portability",
+                    "Right to Unlimited Storage"
+                ],
+                correct: 3,
+                explanation: "Right to Unlimited Storage is not a GDPR right. GDPR provides rights such as access, rectification, erasure, portability, and others related to personal data protection."
+            },
+            {
+                id: 17,
+                question: "HIPAA was enacted in 1996 to protect health information.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. HIPAA (Health Insurance Portability and Accountability Act) was enacted in 1996 to protect the privacy and security of individuals' health information."
+            },
+            {
+                id: 18,
+                question: "What does HIPAA stand for?",
+                type: "multiple",
+                options: [
+                    "Health Information Privacy and Accountability Act",
+                    "Health Insurance Portability and Accountability Act",
+                    "Hospital Information Protection and Authorization Act",
+                    "Healthcare Internet Privacy and Access Act"
+                ],
+                correct: 1,
+                explanation: "HIPAA stands for Health Insurance Portability and Accountability Act, establishing national standards for protecting health information."
+            },
+            {
+                id: 19,
+                question: "Under HIPAA, ePHI stands for electronic Protected Health Information.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. ePHI (electronic Protected Health Information) refers to any protected health information that is created, stored, transmitted, or received electronically."
+            },
+            {
+                id: 20,
+                question: "What does PCI-DSS protect?",
+                type: "multiple",
+                options: [
+                    "Social media accounts",
+                    "Credit card information",
+                    "Email communications",
+                    "Website content"
+                ],
+                correct: 1,
+                explanation: "PCI-DSS (Payment Card Industry Data Security Standard) protects credit card information and cardholder data from theft and fraud."
+            },
+            {
+                id: 21,
+                question: "PCI-DSS stands for Payment Card Industry Data Security Standard.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. PCI-DSS is a set of security standards ensuring companies that handle credit card information maintain a secure environment."
+            },
+            {
+                id: 22,
+                question: "Which regulation is specific to California consumer privacy?",
+                type: "multiple",
+                options: [
+                    "HIPAA",
+                    "GDPR",
+                    "CCPA",
+                    "SOX"
+                ],
+                correct: 2,
+                explanation: "CCPA (California Consumer Privacy Act) is California's data protection law that gives consumers more control over their personal information."
+            },
+            {
+                id: 23,
+                question: "SOX (Sarbanes-Oxley Act) relates to financial reporting security.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. The Sarbanes-Oxley Act (SOX) was enacted to protect investors by improving the accuracy and reliability of corporate financial disclosures."
+            },
+            {
+                id: 24,
+                question: "What is one benefit of using cybersecurity frameworks?",
+                type: "multiple",
+                options: [
+                    "Eliminates all security risks completely",
+                    "Risk reduction through clear guidelines",
+                    "Makes cybersecurity unnecessary",
+                    "Replaces the need for IT staff"
+                ],
+                correct: 1,
+                explanation: "Frameworks provide clear guidelines for identifying, assessing, and mitigating cybersecurity risks, thereby reducing overall risk exposure."
+            },
+            {
+                id: 25,
+                question: "Frameworks help organizations ensure compliance with regulatory standards.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Many organizations use frameworks to ensure they meet regulatory and industry standards such as HIPAA, PCI-DSS, or GDPR."
+            },
+            {
+                id: 26,
+                question: "What does ISO/IEC 27002 provide?",
+                type: "multiple",
+                options: [
+                    "Hardware specifications",
+                    "Control implementation guidance",
+                    "Network cable standards",
+                    "Programming language rules"
+                ],
+                correct: 1,
+                explanation: "ISO/IEC 27002:2022 provides guidance on implementing information security controls, complementing the requirements in ISO/IEC 27001."
+            },
+            {
+                id: 27,
+                question: "NIST Cybersecurity Framework is mandatory for all organizations.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 1,
+                explanation: "False. The NIST Cybersecurity Framework is voluntary and designed to be flexible and adaptable for organizations of all sizes and types."
+            },
+            {
+                id: 28,
+                question: "Which of the following is a key compliance requirement under HIPAA?",
+                type: "multiple",
+                options: [
+                    "Free healthcare for all employees",
+                    "Risk analysis and employee training",
+                    "Unlimited data storage",
+                    "Automatic data deletion"
+                ],
+                correct: 1,
+                explanation: "HIPAA requires organizations to conduct risk analysis, provide employee training, implement access controls, and have incident response processes."
+            },
+            {
+                id: 29,
+                question: "Frameworks promote continuous improvement in cybersecurity practices.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Frameworks promote a culture of continuous evaluation, learning, and improvement in incident response, risk assessment, and security practices."
+            },
+            {
+                id: 30,
+                question: "What is the first step in implementing a cybersecurity framework?",
+                type: "multiple",
+                options: [
+                    "Buy expensive security software",
+                    "Assess current state and identify gaps",
+                    "Hire more employees",
+                    "Change all passwords"
+                ],
+                correct: 1,
+                explanation: "The first step is to assess the current cybersecurity posture and identify gaps using the chosen framework before developing an implementation plan."
+            }
+        ];
+
+        // Password
+        const CORRECT_PASSWORD = "Pro@cyber";
+        
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // Initialize answers array
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        // Check password
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        // Display question
+        function displayQuestion(index) {
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+            const inputType = question.type === "multiple" ? "radio" : "radio";
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        // Select answer
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+            displayQuestion(currentQuestion);
+        }
+
+        // Update progress
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        // Update buttons
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        // Next question
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        // Previous question
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                    return;
+                }
+            }
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        // Calculate score
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        // Display results
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work! You have mastered the frameworks!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job! Strong understanding of frameworks!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort! Keep reviewing the material!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying! You're making progress!";
+            } else {
+                message = "💪 Continue learning! Review the chapter carefully!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            // Answer review
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        // Download results
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+            let content = "Chapter 3: Cybersecurity Frameworks - Easy Level Quiz Results\n";
+            content += "==============================================================\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "---------------------------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Chapter3_Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Initialize
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

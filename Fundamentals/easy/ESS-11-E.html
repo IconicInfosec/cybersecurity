@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 11: Incident Response Plan and Remediation - Easy Level Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chapter 11: Incident Response Plan & Remediation</h1>
+            <p><strong>Cyber Security Essential - Easy Level Quiz</strong></p>
+            <p>30 Questions | Multiple Choice, True/False & Matching</p>
+        </div>
+
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your course materials.</p>
+        </div>
+
+        <div class="content" id="quizContent">
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 30</span>
+                    <span id="scoreIndicator">Answered: 0/30</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 30</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Chapter 11: Incident Response Plan & Remediation | Easy Level</strong></p>
+            <p>© 2026 Cyber Security Essential Course</p>
+            <p>Password Protected Quiz Framework</p>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                question: "An incident is any event that threatens the confidentiality, integrity, or availability of information or systems.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. An incident threatens CIA (Confidentiality, Integrity, Availability) of information or systems."
+            },
+            {
+                id: 2,
+                question: "Which of the following is NOT a type of cybersecurity incident?",
+                type: "multiple",
+                options: [
+                    "Malware Attack",
+                    "Phishing Attack",
+                    "Software Update",
+                    "Data Breach"
+                ],
+                correct: 2,
+                explanation: "Software updates are normal operations. Incidents include: Malware, Phishing, DoS/DDoS, Data Breach, Insider Threat, Zero-Day Exploits, Social Engineering."
+            },
+            {
+                id: 3,
+                question: "Ransomware is a type of malware attack incident.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Ransomware is a type of malware attack, along with viruses and worms."
+            },
+            {
+                id: 4,
+                question: "What type of incident involves overwhelming system resources?",
+                type: "multiple",
+                options: [
+                    "Phishing Attack",
+                    "Denial of Service (DoS/DDoS)",
+                    "Data Breach",
+                    "Zero-Day Exploit"
+                ],
+                correct: 1,
+                explanation: "DoS/DDoS attacks overwhelm system resources to make services unavailable to legitimate users."
+            },
+            {
+                id: 5,
+                question: "Insider threats involve employees or contractors causing harm to the organization.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Insider threats occur when employees or contractors intentionally or accidentally cause harm."
+            },
+            {
+                id: 6,
+                question: "How many phases are in the Incident Response Plan?",
+                type: "multiple",
+                options: [
+                    "4 phases",
+                    "6 phases",
+                    "8 phases",
+                    "10 phases"
+                ],
+                correct: 1,
+                explanation: "There are 6 phases: Preparation, Identification, Containment, Eradication, Recovery, and Lessons Learned."
+            },
+            {
+                id: 7,
+                question: "The first phase of incident response is Identification.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 1,
+                explanation: "False. The first phase is Preparation (training, tools, communication plan). Identification is the second phase."
+            },
+            {
+                id: 8,
+                question: "What is the main purpose of the Preparation phase?",
+                type: "multiple",
+                options: [
+                    "Detect incidents",
+                    "Establish IRT, policies, tools, and communication plans",
+                    "Remove threats",
+                    "Restore operations"
+                ],
+                correct: 1,
+                explanation: "Preparation establishes Incident Response Team (IRT), creates policies/procedures, ensures tools are ready, and develops communication plans."
+            },
+            {
+                id: 9,
+                question: "SIEM and IDS/IPS are tools used for continuous monitoring during the Detection phase.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Security Information and Event Management (SIEM) and Intrusion Detection/Prevention Systems (IDS/IPS) monitor activities and generate alerts."
+            },
+            {
+                id: 10,
+                question: "What should be done during the Identification phase?",
+                type: "multiple",
+                options: [
+                    "Restore systems from backups",
+                    "Detect and confirm incidents",
+                    "Apply patches",
+                    "Conduct post-incident analysis"
+                ],
+                correct: 1,
+                explanation: "Identification involves detecting and confirming incidents through user reports, continuous monitoring, threat intelligence, and log management."
+            },
+            {
+                id: 11,
+                question: "Short-term containment involves disconnecting compromised systems from the network.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Short-term containment immediately isolates affected systems to prevent the spread of the incident."
+            },
+            {
+                id: 12,
+                question: "What is the purpose of long-term containment?",
+                type: "multiple",
+                options: [
+                    "Permanently delete all data",
+                    "Implement lasting containment while repairing vulnerabilities",
+                    "Remove the incident response team",
+                    "Stop all business operations"
+                ],
+                correct: 1,
+                explanation: "Long-term containment implements lasting strategies while repairing vulnerabilities or applying patches, allowing business to continue."
+            },
+            {
+                id: 13,
+                question: "The Containment phase aims to limit the spread of the attack.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Containment stops the spread through short-term isolation and long-term strategies while maintaining business operations."
+            },
+            {
+                id: 14,
+                question: "What is the first step in the Eradication phase?",
+                type: "multiple",
+                options: [
+                    "Apply patches",
+                    "Identify the root cause",
+                    "Restore backups",
+                    "Monitor systems"
+                ],
+                correct: 1,
+                explanation: "Eradication starts by identifying the root cause through thorough investigation of how the incident occurred and what was exploited."
+            },
+            {
+                id: 15,
+                question: "During Eradication, all traces of malware and threats must be removed from affected systems.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Eradication involves cleaning systems by removing all malware, unauthorized modifications, and traces of threats."
+            },
+            {
+                id: 16,
+                question: "What should be done after removing malware during Eradication?",
+                type: "multiple",
+                options: [
+                    "Immediately restore all services",
+                    "Apply patches and update security measures",
+                    "Delete all logs",
+                    "Ignore further security measures"
+                ],
+                correct: 1,
+                explanation: "After removing malware, apply patches/updates to fix vulnerabilities and strengthen access controls, firewall rules, and configurations."
+            },
+            {
+                id: 17,
+                question: "Systems should be restored from trusted backups or clean images during the Recovery phase.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Recovery involves restoring systems from trusted backups or clean images, ensuring vulnerabilities are fixed before going online."
+            },
+            {
+                id: 18,
+                question: "What approach should be used when bringing systems back online during Recovery?",
+                type: "multiple",
+                options: [
+                    "Bring all systems online at once",
+                    "Gradual restoration with close monitoring",
+                    "Skip monitoring to save time",
+                    "Wait 6 months before restoration"
+                ],
+                correct: 1,
+                explanation: "Use gradual restoration - slowly bring systems back online while closely observing for anomalies and signs of compromise."
+            },
+            {
+                id: 19,
+                question: "Continuous monitoring is necessary during Recovery to detect signs of ongoing compromise.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Continuously monitor restored systems for signs of ongoing compromise or reinfection as operations resume."
+            },
+            {
+                id: 20,
+                question: "What is the purpose of the Lessons Learned phase?",
+                type: "multiple",
+                options: [
+                    "Delete all incident records",
+                    "Post-incident analysis to improve future response",
+                    "Blame individuals for mistakes",
+                    "Ignore the incident and move on"
+                ],
+                correct: 1,
+                explanation: "Lessons Learned conducts post-incident analysis to improve response procedures, strengthen controls, and prevent recurrence."
+            },
+            {
+                id: 21,
+                question: "Incident documentation should include incident ID, time/date, type, affected systems, and actions taken.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Documentation includes: ID, time/date, incident type, affected systems, actions taken, resolution, persons involved, and next steps."
+            },
+            {
+                id: 22,
+                question: "What is the main goal of remediation?",
+                type: "multiple",
+                options: [
+                    "Ignore the incident",
+                    "Fix the root cause of the incident",
+                    "Only document the incident",
+                    "Blame the IT team"
+                ],
+                correct: 1,
+                explanation: "Remediation fixes the root cause of incidents by identifying why it happened, applying fixes/patches, and strengthening defenses."
+            },
+            {
+                id: 23,
+                question: "Remediation includes removing malware if the incident involved malicious software.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Remediation steps include removing malware (if applicable) as part of fixing the root cause."
+            },
+            {
+                id: 24,
+                question: "What should be done if credentials are compromised during an incident?",
+                type: "multiple",
+                options: [
+                    "Keep using the same passwords",
+                    "Reset passwords",
+                    "Ignore the issue",
+                    "Delete all user accounts"
+                ],
+                correct: 1,
+                explanation: "Reset passwords if credentials are compromised as part of remediation to prevent unauthorized access."
+            },
+            {
+                id: 25,
+                question: "Vulnerability scanning should be conducted after remediation to verify security.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Conduct vulnerability scans after remediation to verify that security measures are effective and weaknesses are resolved."
+            },
+            {
+                id: 26,
+                question: "Which tools are used for vulnerability scanning?",
+                type: "multiple",
+                options: [
+                    "Microsoft Word, Excel",
+                    "Nessus, OpenVAS, Qualys",
+                    "Facebook, Twitter",
+                    "Photoshop, Illustrator"
+                ],
+                correct: 1,
+                explanation: "Vulnerability scanning tools include Nessus, OpenVAS, and Qualys, which detect weaknesses before attackers exploit them."
+            },
+            {
+                id: 27,
+                question: "Patch management involves tracking, testing, and applying patches in a timely manner.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Patch management tracks released patches (OS, apps, firmware), tests them before deployment, and applies them timely."
+            },
+            {
+                id: 28,
+                question: "What is the purpose of auditing after remediation?",
+                type: "multiple",
+                options: [
+                    "Delete all evidence",
+                    "Verify vulnerabilities are resolved and systems are secure",
+                    "Create new vulnerabilities",
+                    "Ignore security measures"
+                ],
+                correct: 1,
+                explanation: "Auditing verifies: vulnerabilities resolved, no re-infection, logs updated, controls improved. It maintains accountability and improves preparedness."
+            },
+            {
+                id: 29,
+                question: "User reports are an important source of incident detection.",
+                type: "true-false",
+                options: ["True", "False"],
+                correct: 0,
+                explanation: "True. Fostering security awareness encourages employees to report suspicious emails, system malfunctions, and unusual behavior quickly."
+            },
+            {
+                id: 30,
+                question: "What does the Incident Response Team (IRT) include?",
+                type: "multiple",
+                options: [
+                    "Only marketing staff",
+                    "IT staff, security personnel, legal advisors, and PR officers",
+                    "Only external contractors",
+                    "Only management"
+                ],
+                correct: 1,
+                explanation: "IRT includes IT staff, security personnel, legal advisors, and public relations officers with designated roles and responsibilities."
+            }
+        ];
+
+        const CORRECT_PASSWORD = "Pro@cyber";
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="radio" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+            displayQuestion(currentQuestion);
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) {
+                    return;
+                }
+            }
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work! You've mastered incident response!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job! Strong understanding of IR procedures!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort! Keep reviewing the material!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying! You're making progress!";
+            } else {
+                message = "💪 Continue learning! Review the chapter carefully!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = Math.round((correctAnswers / quizData.length) * 100);
+            let content = "Chapter 11: Incident Response Plan and Remediation - Easy Level Quiz Results\n";
+            content += "===========================================================================\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = userAnswers[index] !== null
+                    ? (question.type === "true-false" 
+                        ? (userAnswers[index] === 0 ? "True" : "False")
+                        : question.options[userAnswers[index]])
+                    : "Not answered";
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "---------------------------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Chapter11_Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

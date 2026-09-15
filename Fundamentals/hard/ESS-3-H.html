@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz Template - Framework Only</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* Password Section */
+        .password-section {
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .password-section.active {
+            display: block;
+        }
+
+        .password-section input {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            width: 300px;
+            max-width: 100%;
+        }
+
+        .password-section button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .password-section button:hover {
+            background: #764ba2;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 30px;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: #f9f9f9;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 6px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .question-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f5f7ff;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f5f7ff;
+            font-weight: 600;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #f1f8f4;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #fdeaea;
+            color: #c62828;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #bbb;
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-number {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .score-total {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .results-section p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Answer Review */
+        .answer-review {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .review-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .review-item.correct {
+            border-left-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        .review-item.incorrect {
+            border-left-color: #f44336;
+            background: #fdeaea;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .review-your-answer {
+            font-size: 13px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .review-correct-answer {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+
+        .review-explanation {
+            font-size: 13px;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            color: #555;
+            border-left: 3px solid #667eea;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .password-section input {
+                width: 100%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                flex: 1;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Chapter 3: Cybersecurity Frameworks, Standards and Laws</h1>
+            <p><strong>Cybersecurity Essentials - Hard Level Assessment</strong></p>
+            <p>30 Questions | Multiple Choice & True/False | Password Protected</p>
+        </div>
+
+        <!-- Password Section -->
+        <div class="password-section active" id="passwordSection">
+            <h2 style="color: #333; margin-bottom: 20px;">Quiz Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Please enter the password to access the quiz</p>
+            <input type="password" id="passwordInput" placeholder="Enter Password">
+            <button onclick="checkPassword()">Start Quiz</button>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">Need password? Check your materials.</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content" id="quizContent">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-info">
+                    <span id="questionCounter">Question 1 of 0</span>
+                    <span id="scoreIndicator">Score: 0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="questionsContainer"></div>
+
+            <!-- Button Group -->
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousQuestion()" id="prevBtn">← Previous</button>
+                <button class="btn-primary" onclick="nextQuestion()" id="nextBtn">Next →</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div style="padding: 30px;">
+                <h2>Quiz Completed!</h2>
+                <div class="score-circle">
+                    <div class="score-number" id="finalScore">0</div>
+                    <div class="score-total">out of 0</div>
+                </div>
+                <p style="font-size: 18px; margin: 20px 0;">
+                    <strong>Your Score: <span id="scorePercentage">0</span>%</strong>
+                </p>
+                <p id="performanceMessage" style="font-size: 16px; margin-bottom: 30px;"></p>
+
+                <div class="answer-review">
+                    <h3 style="margin-bottom: 20px; color: #333;">Answer Review</h3>
+                    <div id="answerReviewContent"></div>
+                </div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button class="btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+                    <button class="btn-secondary" onclick="downloadResults()">Download Results</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Chapter 3: Cybersecurity Frameworks, Standards and Laws</strong></p>
+            <p>© 2026 IconicInfoSec | Quiz Framework Template</p>
+            <p>Hard Level Assessment | Auto-generated from PowerPoint Content</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // QUIZ FRAMEWORK - TEMPLATE STRUCTURE
+        // ============================================
+        
+        // STEP 1: Add your quiz data here
+        // Format: Array of question objects
+        const quizData = [
+        {
+                "id": 1,
+                "question": "Cybersecurity frameworks are BEST described as:",
+                "type": "multiple",
+                "options": [
+                        "Legal requirements with penalties for non-compliance",
+                        "Structured sets of guidelines, best practices, and standards used to manage security",
+                        "Software applications for network monitoring",
+                        "Hardware devices for security control"
+                ],
+                "correct": 1,
+                "explanation": "Cybersecurity frameworks are structured sets of guidelines, best practices, and standards that organizations use to manage and improve their security posture systematically."
+        },
+        {
+                "id": 2,
+                "question": "The NIST Cybersecurity Framework consists of how many core functions?",
+                "type": "multiple",
+                "options": [
+                        "Three core functions",
+                        "Five core functions: Identify, Protect, Detect, Respond, Recover",
+                        "Seven core functions",
+                        "Ten core functions"
+                ],
+                "correct": 1,
+                "explanation": "The NIST Cybersecurity Framework has five core functions: Identify (understand assets/risks), Protect (implement safeguards), Detect (find cybersecurity events), Respond (take action), and Recover (restore capabilities)."
+        },
+        {
+                "id": 3,
+                "question": "ISO/IEC 27001 is primarily focused on:",
+                "type": "multiple",
+                "options": [
+                        "Network device configuration",
+                        "Information Security Management Systems (ISMS) certification",
+                        "Software development only",
+                        "Physical security exclusively"
+                ],
+                "correct": 1,
+                "explanation": "ISO/IEC 27001 is an international standard for establishing, implementing, maintaining, and continually improving an Information Security Management System (ISMS), and organizations can be certified against it."
+        },
+        {
+                "id": 4,
+                "question": "ISO/IEC 27002 differs from ISO/IEC 27001 by providing:",
+                "type": "multiple",
+                "options": [
+                        "Certification requirements only",
+                        "Code of practice and detailed security controls guidance",
+                        "Legal compliance mandates",
+                        "Hardware specifications"
+                ],
+                "correct": 1,
+                "explanation": "ISO/IEC 27002 provides a code of practice with detailed guidance on implementing information security controls, while 27001 focuses on the ISMS framework and certification requirements."
+        },
+        {
+                "id": 5,
+                "question": "The 'Identify' function in NIST framework focuses on:",
+                "type": "multiple",
+                "options": [
+                        "Installing security software",
+                        "Understanding organizational assets, risks, and the business environment",
+                        "Responding to security incidents",
+                        "Recovering from attacks"
+                ],
+                "correct": 1,
+                "explanation": "The Identify function helps organizations understand their business context, assets, data, capabilities, and cybersecurity risks to prioritize efforts consistent with risk management strategy and business needs."
+        },
+        {
+                "id": 6,
+                "question": "Standards differ from frameworks because standards:",
+                "type": "multiple",
+                "options": [
+                        "Are always optional suggestions",
+                        "Provide specific technical requirements and specifications for compliance",
+                        "Only apply to government organizations",
+                        "Cannot be audited or certified"
+                ],
+                "correct": 1,
+                "explanation": "Standards provide specific, detailed technical requirements and specifications that must be met for compliance or certification, while frameworks offer flexible guidance and best practices for implementation."
+        },
+        {
+                "id": 7,
+                "question": "GDPR (General Data Protection Regulation) applies to:",
+                "type": "multiple",
+                "options": [
+                        "Only European Union-based companies",
+                        "Any organization processing personal data of EU residents, regardless of location",
+                        "Only government agencies",
+                        "Only healthcare providers"
+                ],
+                "correct": 1,
+                "explanation": "GDPR applies to ANY organization that processes personal data of EU residents, regardless of where the organization is located. It has extraterritorial scope to protect EU citizens' data rights globally."
+        },
+        {
+                "id": 8,
+                "question": "A key principle of GDPR is 'data minimization,' which means:",
+                "type": "multiple",
+                "options": [
+                        "Collecting as much data as possible",
+                        "Collecting only data necessary for specific, legitimate purposes",
+                        "Never collecting any personal data",
+                        "Storing data indefinitely"
+                ],
+                "correct": 1,
+                "explanation": "Data minimization requires organizations to collect only personal data that is adequate, relevant, and limited to what is necessary for the specified processing purposes, reducing privacy risks."
+        },
+        {
+                "id": 9,
+                "question": "HIPAA (Health Insurance Portability and Accountability Act) primarily protects:",
+                "type": "multiple",
+                "options": [
+                        "Financial transaction data",
+                        "Protected Health Information (PHI) in the United States",
+                        "Intellectual property rights",
+                        "Social media data"
+                ],
+                "correct": 1,
+                "explanation": "HIPAA is a US federal law that protects Protected Health Information (PHI), establishing privacy and security standards for healthcare providers, insurers, and their business associates."
+        },
+        {
+                "id": 10,
+                "question": "PCI-DSS (Payment Card Industry Data Security Standard) is mandatory for:",
+                "type": "multiple",
+                "options": [
+                        "All businesses regardless of payment processing",
+                        "Organizations that store, process, or transmit cardholder data",
+                        "Only banks and financial institutions",
+                        "Government agencies only"
+                ],
+                "correct": 1,
+                "explanation": "PCI-DSS is mandatory for any organization that accepts, transmits, or stores cardholder data from major credit card brands. It includes 12 requirements covering network security, data protection, and access controls."
+        },
+        {
+                "id": 11,
+                "question": "The 'Protect' function in NIST framework involves:",
+                "type": "multiple",
+                "options": [
+                        "Only detecting attacks",
+                        "Implementing appropriate safeguards to ensure delivery of critical services",
+                        "Recovering from incidents only",
+                        "Identifying risks exclusively"
+                ],
+                "correct": 1,
+                "explanation": "The Protect function develops and implements safeguards including access control, data security, protective technology, training, and maintenance to limit or contain cybersecurity events."
+        },
+        {
+                "id": 12,
+                "question": "NIST framework is popular because it:",
+                "type": "multiple",
+                "options": [
+                        "Is mandatory for all organizations worldwide",
+                        "Provides flexible, risk-based approach adaptable to any organization",
+                        "Only applies to technology companies",
+                        "Eliminates all cybersecurity risks"
+                ],
+                "correct": 1,
+                "explanation": "NIST is widely adopted because it's voluntary, flexible, risk-based, and can be adapted to organizations of any size or sector. It focuses on outcomes rather than prescriptive requirements."
+        },
+        {
+                "id": 13,
+                "question": "Under GDPR, individuals have the 'right to be forgotten,' which allows them to:",
+                "type": "multiple",
+                "options": [
+                        "Delete their social media accounts",
+                        "Request deletion of their personal data under certain conditions",
+                        "Forget their passwords",
+                        "Hide from law enforcement"
+                ],
+                "correct": 1,
+                "explanation": "The 'right to erasure' or 'right to be forgotten' allows individuals to request that organizations delete their personal data under certain conditions, such as when data is no longer necessary for its original purpose."
+        },
+        {
+                "id": 14,
+                "question": "The 'Detect' function in NIST framework focuses on:",
+                "type": "multiple",
+                "options": [
+                        "Preventing all attacks",
+                        "Developing and implementing activities to identify cybersecurity events",
+                        "Data backup procedures",
+                        "Employee hiring processes"
+                ],
+                "correct": 1,
+                "explanation": "The Detect function implements continuous monitoring, detection processes, and anomaly analysis to identify cybersecurity events promptly, enabling timely response to potential incidents."
+        },
+        {
+                "id": 15,
+                "question": "GDPR violations can result in fines up to:",
+                "type": "multiple",
+                "options": [
+                        "€1,000 maximum",
+                        "€20 million or 4% of annual global turnover, whichever is higher",
+                        "€50,000 fixed amount",
+                        "No financial penalties"
+                ],
+                "correct": 1,
+                "explanation": "GDPR imposes severe penalties: up to €20 million or 4% of annual global turnover (whichever is higher) for serious violations, and up to €10 million or 2% for less severe violations."
+        },
+        {
+                "id": 16,
+                "question": "The 'Respond' function in NIST framework includes:",
+                "type": "multiple",
+                "options": [
+                        "Only preventing future attacks",
+                        "Taking action regarding detected cybersecurity incidents",
+                        "Identifying assets only",
+                        "Hardware procurement"
+                ],
+                "correct": 1,
+                "explanation": "The Respond function includes response planning, communications, analysis, mitigation, and improvements to contain the impact of cybersecurity incidents and execute appropriate response activities."
+        },
+        {
+                "id": 17,
+                "question": "HIPAA requires healthcare organizations to implement which three types of safeguards?",
+                "type": "multiple",
+                "options": [
+                        "Only technical safeguards",
+                        "Administrative, physical, and technical safeguards",
+                        "Only administrative safeguards",
+                        "Financial safeguards only"
+                ],
+                "correct": 1,
+                "explanation": "HIPAA Security Rule requires three types of safeguards: Administrative (policies/procedures), Physical (facility/device security), and Technical (technology controls) to protect electronic Protected Health Information."
+        },
+        {
+                "id": 18,
+                "question": "The 'Recover' function in NIST framework aims to:",
+                "type": "multiple",
+                "options": [
+                        "Prevent all future incidents",
+                        "Maintain resilience plans and restore capabilities impaired during incidents",
+                        "Identify new threats only",
+                        "Eliminate security controls"
+                ],
+                "correct": 1,
+                "explanation": "The Recover function focuses on recovery planning, improvements, and communications to restore capabilities and services impaired during cybersecurity incidents and maintain business resilience."
+        },
+        {
+                "id": 19,
+                "question": "CIS Controls (Center for Internet Security) provide:",
+                "type": "multiple",
+                "options": [
+                        "Legal compliance requirements only",
+                        "Prioritized set of actions to protect against common cyber attacks",
+                        "Hardware manufacturing standards",
+                        "Social media guidelines"
+                ],
+                "correct": 1,
+                "explanation": "CIS Controls offer a prioritized set of 18 safeguards (formerly 20) to defend against the most common and dangerous cyber attacks, organized by implementation groups based on organization size and resources."
+        },
+        {
+                "id": 20,
+                "question": "SOX (Sarbanes-Oxley Act) primarily focuses on:",
+                "type": "multiple",
+                "options": [
+                        "Healthcare data protection",
+                        "Financial reporting accuracy and corporate governance for public companies",
+                        "Personal privacy rights",
+                        "Telecommunications regulation"
+                ],
+                "correct": 1,
+                "explanation": "SOX is a US federal law requiring publicly traded companies to maintain accurate financial records, implement internal controls, and protect the integrity of financial data and systems."
+        },
+        {
+                "id": 21,
+                "question": "GDPR requires organizations to report data breaches to authorities within:",
+                "type": "multiple",
+                "options": [
+                        "30 days",
+                        "72 hours of becoming aware of the breach",
+                        "One year",
+                        "No reporting requirement"
+                ],
+                "correct": 1,
+                "explanation": "GDPR mandates that organizations must notify the relevant supervisory authority within 72 hours of becoming aware of a data breach that poses a risk to individuals' rights and freedoms."
+        },
+        {
+                "id": 22,
+                "question": "ISO/IEC 27001 certification demonstrates that an organization:",
+                "type": "multiple",
+                "options": [
+                        "Will never experience security incidents",
+                        "Has implemented and maintains an audited Information Security Management System",
+                        "Is immune to cyber attacks",
+                        "Doesn't need other security controls"
+                ],
+                "correct": 1,
+                "explanation": "ISO/IEC 27001 certification proves an organization has implemented, maintains, and continuously improves an ISMS that has been independently audited, demonstrating commitment to information security management."
+        },
+        {
+                "id": 23,
+                "question": "The concept of 'Privacy by Design' means:",
+                "type": "multiple",
+                "options": [
+                        "Adding privacy controls after deployment",
+                        "Embedding privacy into design and operation of systems from the outset",
+                        "Ignoring privacy requirements",
+                        "Only considering privacy during audits"
+                ],
+                "correct": 1,
+                "explanation": "Privacy by Design requires embedding privacy and data protection into the design, development, and operation of systems, products, and business processes from the beginning, not as an afterthought."
+        },
+        {
+                "id": 24,
+                "question": "COBIT (Control Objectives for Information and Related Technologies) framework focuses on:",
+                "type": "multiple",
+                "options": [
+                        "Only network security",
+                        "IT governance and management for enterprise IT",
+                        "Physical security exclusively",
+                        "Personal device management only"
+                ],
+                "correct": 1,
+                "explanation": "COBIT is a framework for IT governance and management, helping organizations align IT with business objectives, manage risks, and ensure IT delivers value while meeting stakeholder needs."
+        },
+        {
+                "id": 25,
+                "question": "Under GDPR, a Data Protection Officer (DPO) must be appointed when:",
+                "type": "multiple",
+                "options": [
+                        "Never - it's always optional",
+                        "Processing is by a public authority or involves large-scale systematic monitoring or sensitive data",
+                        "The organization has more than 5 employees",
+                        "The organization uses email"
+                ],
+                "correct": 1,
+                "explanation": "GDPR requires appointing a DPO when: the processor is a public authority (except courts), core activities involve large-scale systematic monitoring, or core activities involve large-scale processing of sensitive data."
+        },
+        {
+                "id": 26,
+                "question": "NIST SP 800-53 provides:",
+                "type": "multiple",
+                "options": [
+                        "Programming language specifications",
+                        "Catalog of security and privacy controls for federal information systems",
+                        "Social media guidelines",
+                        "Hardware specifications only"
+                ],
+                "correct": 1,
+                "explanation": "NIST SP 800-53 is a publication providing a comprehensive catalog of security and privacy controls for federal information systems and organizations, widely used beyond government as a security control baseline."
+        },
+        {
+                "id": 27,
+                "question": "FISMA (Federal Information Security Management Act) requires:",
+                "type": "multiple",
+                "options": [
+                        "Only private companies to secure data",
+                        "US federal agencies to develop, document, and implement information security programs",
+                        "International organizations to follow US laws",
+                        "Elimination of all cybersecurity risks"
+                ],
+                "correct": 1,
+                "explanation": "FISMA requires US federal agencies and their contractors to develop, document, and implement information security and risk management programs to protect government information and systems."
+        },
+        {
+                "id": 28,
+                "question": "The principle of 'lawfulness, fairness, and transparency' under GDPR means:",
+                "type": "multiple",
+                "options": [
+                        "Organizations can hide data processing activities",
+                        "Data processing must have legal basis, be fair, and individuals informed about processing",
+                        "Data can be collected without consent",
+                        "Privacy policies are unnecessary"
+                ],
+                "correct": 1,
+                "explanation": "This core GDPR principle requires that data processing must have a lawful basis, be fair to individuals, and transparent (individuals must be informed about how their data is collected, used, and shared)."
+        },
+        {
+                "id": 29,
+                "question": "CCPA (California Consumer Privacy Act) grants California residents the right to:",
+                "type": "multiple",
+                "options": [
+                        "Only view their data",
+                        "Know what personal data is collected, delete data, opt-out of sale, and non-discrimination",
+                        "Access government databases",
+                        "No specific rights"
+                ],
+                "correct": 1,
+                "explanation": "CCPA grants California residents rights to: know what personal data is collected, access their data, request deletion, opt-out of data sale, and non-discrimination for exercising their privacy rights."
+        },
+        {
+                "id": 30,
+                "question": "Organizations implement frameworks, standards, and comply with laws to:",
+                "type": "multiple",
+                "options": [
+                        "Eliminate all business risks completely",
+                        "Systematically manage security risks, meet legal obligations, and build stakeholder trust",
+                        "Increase operational costs only",
+                        "Replace all security technologies"
+                ],
+                "correct": 1,
+                "explanation": "Organizations use frameworks for systematic risk management, adopt standards for best practices and certification, and comply with laws to meet legal obligations, avoid penalties, protect data, and build stakeholder trust."
+        }
+];
+
+        // STEP 2: Set your password
+        const CORRECT_PASSWORD = "Pro@cyber";
+        
+        // Quiz state variables
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // ============================================
+        // CORE FUNCTIONS
+        // ============================================
+
+        function initializeAnswers() {
+            userAnswers = new Array(quizData.length).fill(null);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById("passwordSection").classList.remove("active");
+                document.getElementById("quizContent").classList.add("active");
+                quizStarted = true;
+                initializeAnswers();
+                displayQuestion(0);
+            } else {
+                alert("❌ Incorrect password. Please try again.");
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+
+        function displayQuestion(index) {
+            if (quizData.length === 0) {
+                alert("No questions added to quiz data!");
+                return;
+            }
+
+            const question = quizData[index];
+            const container = document.getElementById("questionsContainer");
+            const inputType = question.type === "multiple" ? "radio" : "checkbox";
+
+            let optionsHTML = "";
+            if (question.type === "true-false") {
+                optionsHTML = `
+                    <div class="option" onclick="selectAnswer(${index}, 0)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 0 ? "checked" : ""}>
+                        <label>True</label>
+                    </div>
+                    <div class="option" onclick="selectAnswer(${index}, 1)">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === 1 ? "checked" : ""}>
+                        <label>False</label>
+                    </div>
+                `;
+            } else {
+                optionsHTML = question.options.map((option, i) => `
+                    <div class="option" onclick="selectAnswer(${index}, ${i})">
+                        <input type="${inputType}" name="answer-${index}" ${userAnswers[index] === i ? "checked" : ""}>
+                        <label>${option}</label>
+                    </div>
+                `).join("");
+            }
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-type">${question.type === "true-false" ? "TRUE/FALSE" : "MULTIPLE CHOICE"}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function selectAnswer(questionIndex, answerIndex) {
+            userAnswers[questionIndex] = answerIndex;
+        }
+
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const percentage = Math.round((currentQuestion + 1) / quizData.length * 100);
+            
+            document.getElementById("questionCounter").textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+            document.getElementById("scoreIndicator").textContent = `Answered: ${answered}/${quizData.length}`;
+            document.getElementById("progressFill").style.width = percentage + "%";
+        }
+
+        function updateButtons() {
+            document.getElementById("prevBtn").disabled = currentQuestion === 0;
+            document.getElementById("nextBtn").textContent = currentQuestion === quizData.length - 1 ? "Submit Quiz ✓" : "Next →";
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const correctAnswers = calculateScore();
+            displayResults(correctAnswers);
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            quizData.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+            return correct;
+        }
+
+        function displayResults(correctAnswers) {
+            document.getElementById("quizContent").classList.remove("active");
+            document.getElementById("resultsSection").classList.add("active");
+
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+
+            document.getElementById("finalScore").textContent = correctAnswers;
+            document.querySelector(".score-total").textContent = `out of ${quizData.length}`;
+            document.getElementById("scorePercentage").textContent = percentage;
+
+            let message = "Quiz completed!";
+            if (percentage >= 90) {
+                message = "🌟 Excellent work!";
+            } else if (percentage >= 80) {
+                message = "✅ Great job!";
+            } else if (percentage >= 70) {
+                message = "👍 Good effort!";
+            } else if (percentage >= 60) {
+                message = "📚 Keep studying!";
+            } else {
+                message = "💪 Continue learning!";
+            }
+            document.getElementById("performanceMessage").textContent = message;
+
+            // Answer review
+            let reviewHTML = "";
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                reviewHTML += `
+                    <div class="review-item ${isCorrect ? "correct" : "incorrect"}">
+                        <div class="review-question">Q${index + 1}: ${question.question}</div>
+                        <div class="review-your-answer">Your Answer: <strong>${userAnswerText}</strong></div>
+                        ${!isCorrect ? `<div class="review-correct-answer">Correct Answer: <strong>${correctAnswerText}</strong></div>` : ""}
+                        <div class="review-explanation"><strong>Explanation:</strong> ${question.explanation}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById("answerReviewContent").innerHTML = reviewHTML;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            initializeAnswers();
+            document.getElementById("resultsSection").classList.remove("active");
+            document.getElementById("quizContent").classList.add("active");
+            displayQuestion(0);
+        }
+
+        function downloadResults() {
+            const correctAnswers = calculateScore();
+            const percentage = quizData.length > 0 ? Math.round((correctAnswers / quizData.length) * 100) : 0;
+            let content = "Quiz Results\n";
+            content += "============\n\n";
+            content += `Score: ${correctAnswers}/${quizData.length} (${percentage}%)\n\n`;
+            content += "Detailed Results:\n";
+            content += "================\n\n";
+
+            quizData.forEach((question, index) => {
+                const isCorrect = userAnswers[index] === question.correct;
+                const userAnswerText = question.type === "true-false" 
+                    ? (userAnswers[index] === 0 ? "True" : "False")
+                    : question.options[userAnswers[index]];
+                const correctAnswerText = question.type === "true-false"
+                    ? (question.correct === 0 ? "True" : "False")
+                    : question.options[question.correct];
+
+                content += `Q${index + 1}: ${question.question}\n`;
+                content += `Your Answer: ${userAnswerText}\n`;
+                content += `Correct Answer: ${correctAnswerText}\n`;
+                content += `Status: ${isCorrect ? "✓ CORRECT" : "✗ INCORRECT"}\n`;
+                content += `Explanation: ${question.explanation}\n`;
+                content += "-----------------------------------------\n\n";
+            });
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'Quiz_Results.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        window.onload = function() {
+            document.getElementById("passwordInput").focus();
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById("passwordInput");
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
